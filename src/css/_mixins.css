@@ -1,0 +1,9 @@
+@custom-media --sm (min-width: 768px);
+
+@define-mixin line-clamp $line_num {
+  /* stylelint-disable-next-line value-no-vendor-prefix */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line_num;
+  overflow: hidden;
+}

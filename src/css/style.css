@@ -1,0 +1,92 @@
+/* For UI and Editor */
+
+@import "./_mixins.css";
+
+:where(.wp-block-su-blogcard) {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.wp-blogcard {
+  margin: 0;
+}
+
+.wp-blogcard-item {
+  display: flex;
+  flex-direction: row-reverse;
+  overflow: hidden;
+  line-height: 1.5;
+  color: var(--su-text-base, #52525b); /* zinc-600 */
+  cursor: pointer;
+  background-color: var(--su-bg-white, white);
+  border: 2px solid var(--su-border-extra-light, #e4e4e7); /* zinc-200 */
+  border-radius: var(--su-radius-xl, 0.625rem);
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.wp-blogcard-figure {
+  flex-shrink: 0;
+  width: 24%;
+  max-width: 14rem;
+
+  & img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.wp-blogcard-content {
+  flex-grow: 1;
+  padding: 1rem;
+
+  @media (--sm) {
+    padding: 1.5rem;
+  }
+}
+
+.wp-blogcard-title {
+  @mixin line-clamp 2;
+
+  font-size: var(--su-font-size-sm, 0.875rem);
+  font-weight: 700;
+  line-height: 1.375;
+  color: var(--su-text-dark, #27272a); /* zinc-800 */
+
+  @media (--sm) {
+    margin-bottom: 0.375rem;
+    font-size: 1rem;
+  }
+}
+
+.wp-blogcard-description {
+  @mixin line-clamp 2;
+
+  height: 0;
+  font-size: 0.75rem;
+  color: var(--su-text-light, #71717a); /* zinc-500 */
+
+  @media (--sm) {
+    height: auto;
+  }
+}
+
+.wp-blogcard-cite {
+  display: flex;
+  gap: 0.375rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.wp-blogcard-favicon {
+  border-radius: 0.125rem;
+}
+
+.wp-blogcard-domain {
+  font-size: var(--su-font-size-xs, 0.75rem);
+  font-style: italic;
+}

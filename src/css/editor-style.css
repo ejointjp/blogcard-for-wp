@@ -1,0 +1,29 @@
+/* For Editor */
+
+.wp-blogcard-editor {
+  padding: 1rem;
+  background-color: var(--su-zinc-100, #f4f4f5);
+  border-radius: 0.5rem;
+}
+
+.wp-blogcard-editor-input {
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+}
+
+.wp-blogcard-editor-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.wp-blogcard-item {
+  margin-top: 0.5rem;
+}
+
+.cached-btn {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.625rem;
+}
