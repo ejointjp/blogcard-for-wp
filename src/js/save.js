@@ -18,7 +18,8 @@ export default function save (props) {
       thumbnail,
       json,
       title,
-      description
+      description,
+      thumbnailUrl
     }
   } = props
 
@@ -54,14 +55,17 @@ export default function save (props) {
             >
               {!thumbnail && (
               <figure className="wp-blogcard-figure">
-                <Thumbnail url={url} thumbnail={json.thumbnail} />
+                {thumbnailUrl
+                  ? <img src={thumbnailUrl} alt="" aria-hidden="true" />
+                  : <Thumbnail url={url} thumbnail={json.thumbnail} />
+              }
               </figure>
               )}
               <div className="wp-blogcard-content">
                 {displayTitle && <div className="wp-blogcard-title">{he.decode(displayTitle)}</div>}
                 {displayDescription && <div className="wp-blogcard-description">{he.decode(displayDescription)}</div>}
                 <div className="wp-blogcard-cite">
-                  {json.hasFavicon && <img className="wp-blogcard-favicon" src={faviconUrl(url)} alt="" aria-hidden="true" />}
+                  {json.hasFavicon === 200 && <img className="wp-blogcard-favicon" src={faviconUrl(url)} alt="" aria-hidden="true" />}
                   <div className="wp-blogcard-domain">{domain}</div>
                 </div>
               </div>

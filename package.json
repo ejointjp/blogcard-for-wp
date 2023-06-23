@@ -1,6 +1,6 @@
 {
   "name": "wp-blogcard",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "リンク先のブログカードを簡単に作成できるカスタムブロックです。",
   "main": "index.js",
   "scripts": {

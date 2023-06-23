@@ -40,7 +40,6 @@ export default function edit (props) {
 
     try {
       const res = await fetch(api, { method: 'post', body: params })
-      console.log('res', res)
       const getJson = await res.json()
 
       // jsonが空だったら（初回は）デフォルト値を設定
@@ -177,7 +176,7 @@ export default function edit (props) {
             {displayTitle && <div className="wp-blogcard-title">{he.decode(displayTitle)}</div>}
             {displayDescription && <div className="wp-blogcard-description">{he.decode(displayDescription)}</div>}
             <div className="wp-blogcard-cite">
-              {json.hasFavicon && <img className="wp-blogcard-favicon" src={faviconUrl(url)} alt="" aria-hidden="true" />}
+              {json.hasFavicon === 200 && <img className="wp-blogcard-favicon" src={faviconUrl(url)} alt="" aria-hidden="true" />}
               <div className="wp-blogcard-domain">{domain}</div>
             </div>
           </div>
@@ -298,7 +297,6 @@ export default function edit (props) {
             <MediaUpload
               onSelect={(value) => {
                 setAttributes({ thumbnailUrl: value.url })
-                console.log(value)
               }}
               allowedTypes={ALLOWED_MEDIA_TYPES}
               value={thumbnailUrl}
