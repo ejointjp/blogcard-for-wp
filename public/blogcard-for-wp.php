@@ -66,16 +66,14 @@ function wpbc_block_init()
   ]);
 }
 
-
 /**
  * Categories
  *
  * @param array $categories Categories.
  * @param array $post Post.
  */
-
-if (!function_exists('wpbc_categories')) {
-  function wpbc_categories($categories, $post)
+if (!function_exists('su_categories')) {
+  function su_categories($categories, $post)
   {
     return array_merge(
       $categories,
@@ -84,13 +82,12 @@ if (!function_exists('wpbc_categories')) {
           'slug'  => 'su',   // ブロックカテゴリーのスラッグ.
           'title' => 'su blocks'  // ブロックカテゴリーの表示名.
           // 'icon'  => 'wordpress',    //アイコンの指定（Dashicons名）.
-        ],
+        ]
       ]
     );
   }
-  add_filter('block_categories_all', 'wpbc_categories', 10, 2);
+  add_filter('block_categories_all', 'su_categories', 10, 2);
 }
-
 
 add_action('enqueue_block_editor_assets', 'wpbc_enqueue_block_editor_assets');
 function wpbc_enqueue_block_editor_assets()
