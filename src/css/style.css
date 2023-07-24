@@ -31,6 +31,7 @@
   flex-shrink: 0;
   width: 24%;
   max-width: 14rem;
+  margin-bottom: 0;
 
   & img {
     object-fit: cover;

@@ -5,7 +5,7 @@ const { registerBlockType } = wp.blocks
 
 registerBlockType('su/blogcard', {
   apiVersion: 2,
-  title: 'ブログカード',
+  title: 'SU ブログカード',
   description: '',
   category: 'su',
   icon: 'admin-links',
