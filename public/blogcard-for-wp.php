@@ -3,7 +3,7 @@
 Plugin Name: Blogcard for WP
 Plugin URI: https://e-joint.jp/works/blogcard-for-wp
 Description: URLを貼るだけで、ブログカード風のリンクが作れるGutenbergブロックです。
-Version:     1.0.6
+Version:     1.0.7
 Author:      Takashi Fujisaki
 Author URI:  https://e-joint.jp
 License:     GPL-2.0-or-later

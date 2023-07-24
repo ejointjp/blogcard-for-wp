@@ -4,7 +4,7 @@ Donate link: https://e-joint.jp
 Tags: link, blog, blogcard, card, url
 Requires at least: 5.0
 Tested up to: 6.2.2
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -32,22 +32,7 @@ URLをブロックエディターに貼り付けるだけ。あっという間�
 
 == Changelog ==
 
-= 1.0.6 =
-バグ修正
-
-= 1.0.5 =
-バグ修正
-
-= 1.0.4 =
-バグ修正
-
-= 1.0.3 =
-バグ修正
-
-= 1.0.2 =
-バグ修正
-
-= 1.0.1 =
+= 1.0.7 =
 バグ修正
 
 = 1.0.0 =
