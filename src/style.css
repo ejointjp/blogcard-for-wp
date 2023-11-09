@@ -3,6 +3,7 @@
 /* @import "./_mixins.css"; */
 
 body {
+	--humib-blogcard-bg-base: #f1f1f7;
 	--humib-blogcard-text-light: #5b5b62;
 	--humib-blogcard-border-base: #e4e4e8;
 }

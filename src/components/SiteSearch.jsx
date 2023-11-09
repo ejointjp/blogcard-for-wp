@@ -5,15 +5,14 @@ import { isValidUrl } from "../util";
 import { SharedContext } from "../libs/contextProvider";
 import { useContext } from "@wordpress/element";
 
-const SiteSearch = ({ onClick, onChange, onKeyDown, setAttributes }) => {
+const SiteSearch = ({ onChange, attributes, setAttributes }) => {
+	const { url } = attributes;
 	const [searchResults, setSearchResults] = useState([]);
 	const [showPopover, setShowPopover] = useState(false);
 	const {
-		postId,
 		setPostId,
 		searchQuery,
 		setSearchQuery,
-		state,
 		setState,
 		tempUrl,
 		setTempUrl,
@@ -104,7 +103,7 @@ const SiteSearch = ({ onClick, onChange, onKeyDown, setAttributes }) => {
 		};
 	}, []);
 	return (
-		<div className="wp-blogcard-site-search">
+		<>
 			<SearchControl
 				label="検索"
 				value={searchQuery}
@@ -114,10 +113,10 @@ const SiteSearch = ({ onClick, onChange, onKeyDown, setAttributes }) => {
 				}}
 				onKeyDown={handleKeyDown}
 				className="search-component"
-				placeholder="URLを入力 / サイト内検索の場合はキーワードを入力"
+				placeholder="URLを入力してEnter / サイト内検索の場合はキーワードを入力"
 			/>
 			{showPopover && !isValidUrl(searchQuery) && (
-				<div className="wp-blogcard-site-search-results">
+				<div className="wp-blogcard-editor-site-search-results">
 					<ul className="">
 						{searchResults.map((post) => (
 							<li
@@ -138,7 +137,7 @@ const SiteSearch = ({ onClick, onChange, onKeyDown, setAttributes }) => {
 					</ul>
 				</div>
 			)}
-		</div>
+		</>
 	);
 };
 

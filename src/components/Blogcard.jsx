@@ -1,61 +1,21 @@
-import {
-	PanelBody,
-	BaseControl,
-	SelectControl,
-	ToggleControl,
-	TextControl,
-	Button,
-} from "@wordpress/components";
-import {
-	PlainText,
-	InspectorControls,
-	useBlockProps,
-	MediaUpload,
-	MediaUploadCheck,
-} from "@wordpress/block-editor";
-import { useState, useEffect } from "@wordpress/element";
+import { PlainText, useBlockProps } from "@wordpress/block-editor";
+import { useEffect } from "@wordpress/element";
 import { useContext } from "@wordpress/element";
 import { SharedContext } from "../libs/contextProvider";
 import ReactLoading from "react-loading";
 import he from "he"; // 特殊文字のデコード
 import Thumbnail from "./Thumbnail";
 import SiteSearch from "./SiteSearch";
+import Controls from "./Controls";
 import { getDomainFromUrl, isValidUrl, faviconUrl } from "../util";
 
 export default function Blogcard({ props }) {
-	const blockProps = useBlockProps({ className: "wp-blogcard-editor" });
-	const {
-		attributes: {
-			url,
-			target,
-			nofollow,
-			noopener,
-			noreferrer,
-			external,
-			sponsored,
-			ugc,
-			thumbnail,
-			json,
-			title,
-			description,
-			thumbnailUrl,
-		},
-	} = props;
-
-	console.log("json", json);
-	const { setAttributes } = props;
-	const {
-		postId,
-		setPostId,
-		searchQuery,
-		setSearchQuery,
-		state,
-		setState,
-		tempUrl,
-		setTempUrl,
-	} = useContext(SharedContext);
-	const [clearText, setClearText] = useState(""); // キャッシュをクリアしたときのメッセージ
 	const api = wpbcAjaxValues.api;
+	const blockProps = useBlockProps({ className: "wp-blogcard-editor" });
+	const { attributes, setAttributes } = props;
+	const { url, thumbnail, json, title, description, thumbnailUrl } = attributes;
+	const { postId, state, setState, setTempUrl } = useContext(SharedContext);
+	console.log("json", json);
 
 	const fetchData = async () => {
 		const params = new URLSearchParams();
@@ -85,49 +45,7 @@ export default function Blogcard({ props }) {
 		}
 	};
 
-	// const onKeyDown = (e) => {
-	// 	// URL入力してEnterを押したら
-	// 	if (e.key === "Enter") {
-	// 		e.preventDefault();
-
-	// 		// URLが空なら
-	// 		if (tempUrl === "") {
-	// 			setState("url-empty");
-	// 			return false;
-	// 		}
-	// 		// 渡される前にURLの形式チェック
-	// 		if (!isValidUrl(tempUrl)) {
-	// 			setState("url-invalid");
-	// 			return false;
-	// 		}
-
-	// 		// 前のURLから変更がなければ何もしない
-	// 		if (tempUrl === url) {
-	// 			return false;
-	// 		}
-
-	// 		// 入力URLを実際のURLに渡す（検索がはじまる）
-	// 		setAttributes({ url: tempUrl });
-	// 		// 検索モード
-	// 		setState("search");
-	// 	}
-	// };
-
-	// キャッシュ削除ボタンへfetch
-	const removeCache = async () => {
-		const params = new URLSearchParams();
-		params.append("action", wpbcAjaxValues.actionRemoveCache);
-		params.append("nonce", wpbcAjaxValues.nonceRemoveCache);
-		params.append("url", url);
-
-		const res = await fetch(api, { method: "post", body: params });
-		const getText = await res.text();
-		// cacheクリアが完了したら
-		if (getText === "1") setClearText("キャッシュを削除しました");
-	};
-
 	const isExternalLink = (url) => {
-		// const reg = new RegExp('^(https?:)?//' + document.domain)
 		const reg = new RegExp("^(https?:)?//" + location.hostname);
 
 		return !(url.match(reg) || url.charAt(0) === "/");
@@ -190,8 +108,6 @@ export default function Blogcard({ props }) {
 		}
 	};
 
-	const ALLOWED_MEDIA_TYPES = ["image"];
-
 	const Result = () => {
 		const displayTitle = title || json.title;
 		const displayDescription = description || json.description;
@@ -231,7 +147,7 @@ export default function Blogcard({ props }) {
 					</div>
 				</div>
 				<div className="wp-blogcard-editor-footer">
-					<button className="wp-blogcard-editor-link button button-small">
+					<button className="wp-blogcard-editor-link components-button is-secondary button-small">
 						<a href={url} target="blank noopener noreferrer">
 							リンクを表示
 						</a>
@@ -240,11 +156,6 @@ export default function Blogcard({ props }) {
 			</div>
 		);
 	};
-
-	//
-	useEffect(() => {
-		if (target !== "") setAttributes({ noopener: true });
-	}, [target]);
 
 	// URLが有効ならfetch
 	useEffect(() => {
@@ -260,21 +171,14 @@ export default function Blogcard({ props }) {
 		changeState();
 	}, [json]);
 
-	// const onClickSiteSearch = (value) => {
-	// 	console.log("value", value);
-	// 	setPostId(value.id);
-	// 	setTempUrl(value.link);
-	// 	setAttributes({ url: value.link });
-	// 	setState("search");
-	// };
-
 	return (
 		<>
 			<div {...blockProps}>
-				<div className="wp-blogcard-editor-url">
+				<div className="wp-blogcard-editor-site-search">
 					<SiteSearch
 						// onClick={onClickSiteSearch}
 						onChange={(value) => setTempUrl(value)}
+						attributes={attributes}
 						setAttributes={setAttributes}
 					/>
 					{/* <PlainText
@@ -289,121 +193,7 @@ export default function Blogcard({ props }) {
 				<Display />
 			</div>
 
-			<InspectorControls>
-				<PanelBody
-					title={"ブロック設定"}
-					className="su-components-panel__body su-components-panel__body--wp-blogcard"
-				>
-					<SelectControl
-						label="target属性"
-						value={target}
-						onChange={(value) => setAttributes({ target: value })}
-						options={[
-							{ value: "", label: "なし" },
-							{ value: "_blank", label: "_blank (別ウインドウ・タブ)" },
-							{ value: "_new", label: "_new (ひとつの別ウインドウ・タブ)" },
-							{ value: "_self", label: "_self (同じウインドウ・タブ)" },
-						]}
-					/>
-
-					<ToggleControl
-						label="external を追加"
-						help=""
-						checked={external}
-						onChange={(value) => setAttributes({ external: value })}
-					/>
-					<ToggleControl
-						label="noopener を追加"
-						help="target属性があれば強制的に有効になります"
-						checked={noopener}
-						disabled={target !== ""}
-						onChange={(value) =>
-							setAttributes({ noopener: target === "" ? value : true })
-						}
-					/>
-					<ToggleControl
-						label="rel=nofollow を追加"
-						help=""
-						checked={nofollow}
-						onChange={(value) => setAttributes({ nofollow: value })}
-					/>
-					<ToggleControl
-						label="rel=noreferrer を追加"
-						help=""
-						checked={noreferrer}
-						onChange={(value) => setAttributes({ noreferrer: value })}
-					/>
-					<ToggleControl
-						label="rel=sponsored を追加"
-						help=""
-						checked={sponsored}
-						onChange={(value) => setAttributes({ sponsored: value })}
-					/>
-					<ToggleControl
-						label="rel=ugc を追加"
-						help=""
-						checked={ugc}
-						onChange={(value) => setAttributes({ ugc: value })}
-					/>
-
-					<ToggleControl
-						label="サムネイルを表示しない"
-						help=""
-						checked={thumbnail}
-						onChange={(value) => {
-							setAttributes({ thumbnail: value });
-						}}
-					/>
-
-					<BaseControl label="キャッシュを削除">
-						<div className="cached-btn">
-							<Button
-								className="components-button is-secondary"
-								onClick={removeCache}
-							>
-								キャッシュを削除
-							</Button>
-							{json.cached && <span>Cached</span>}
-						</div>
-						{clearText && <div className="mt-1">{clearText}</div>}
-					</BaseControl>
-
-					<TextControl
-						label="タイトルを手動で入力"
-						value={title}
-						onChange={(value) => {
-							setAttributes({ title: value });
-						}}
-					/>
-					<TextControl
-						label="説明文を手動で入力"
-						value={description}
-						onChange={(value) => {
-							setAttributes({ description: value });
-						}}
-					/>
-
-					<BaseControl label="サムネイルを手動で設定">
-						<MediaUploadCheck>
-							<MediaUpload
-								onSelect={(value) => {
-									setAttributes({ thumbnailUrl: value.url });
-								}}
-								allowedTypes={ALLOWED_MEDIA_TYPES}
-								value={thumbnailUrl}
-								render={({ open }) => (
-									<Button
-										onClick={open}
-										className="editor-post-featured-image__toggle"
-									>
-										メディアライブラリを開く
-									</Button>
-								)}
-							/>
-						</MediaUploadCheck>
-					</BaseControl>
-				</PanelBody>
-			</InspectorControls>
+			<Controls attributes={attributes} setAttributes={setAttributes} />
 		</>
 	);
 }
