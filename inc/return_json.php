@@ -109,8 +109,7 @@ function wpbc_json($attr, $transient = true)
       'title' => $title,
       'description' => $description,
       'hasFavicon' => $has_favicon,
-      'postId' => $post_id,
-      'ttttt' => get_the_title($post_id)
+      'postId' => $post_id
     ];
 
     // サムネイルがあれば返却

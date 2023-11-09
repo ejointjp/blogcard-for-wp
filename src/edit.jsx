@@ -3,7 +3,7 @@ import Blogcard from "./components/Blogcard";
 
 export default function edit(props) {
 	return (
-		<SharedContextProvider>
+		<SharedContextProvider defaultUrl={props.attributes.url}>
 			<Blogcard props={props} />
 		</SharedContextProvider>
 	);

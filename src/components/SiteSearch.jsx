@@ -5,11 +5,19 @@ import { isValidUrl } from "../util";
 import { SharedContext } from "../libs/contextProvider";
 import { useContext } from "@wordpress/element";
 
-const SiteSearch = ({ onClick, onChange, onKeyDown }) => {
-	const [searchQuery, setSearchQuery] = useState("");
+const SiteSearch = ({ onClick, onChange, onKeyDown, setAttributes }) => {
 	const [searchResults, setSearchResults] = useState([]);
 	const [showPopover, setShowPopover] = useState(false);
-	const { sharedState, setSharedState } = useContext(SharedContext);
+	const {
+		postId,
+		setPostId,
+		searchQuery,
+		setSearchQuery,
+		state,
+		setState,
+		tempUrl,
+		setTempUrl,
+	} = useContext(SharedContext);
 
 	// 非同期検索関数
 	const performSearch = (query) => {
@@ -34,6 +42,51 @@ const SiteSearch = ({ onClick, onChange, onKeyDown }) => {
 		}
 	}, 300);
 
+	// 画面クリック時にPopoverを閉じる関数
+	const handleOutsideClick = (event) => {
+		setShowPopover(false);
+	};
+
+	// Enterを押したら
+	const handleKeyDown = (e) => {
+		if (e.key === "Enter") {
+			e.preventDefault();
+
+			// URLが空なら
+			if (tempUrl === "") {
+				setState("url-empty");
+				return false;
+			}
+			// 渡される前にURLの形式チェック
+			if (!isValidUrl(tempUrl)) {
+				setState("url-invalid");
+				return false;
+			}
+
+			// 前のURLから変更がなければ何もしない
+			if (tempUrl === url) {
+				return false;
+			}
+
+			// 入力URLを実際のURLに渡す（検索がはじまる）
+			setAttributes({ url: tempUrl });
+			// 検索モード
+			setState("search");
+		}
+	};
+
+	// サイト内検索の結果をクリックしたら
+	const handleClickResult = (value) => {
+		console.log("value", value);
+		setPostId(value.id);
+		setTempUrl(value.link);
+		setAttributes({ url: value.link });
+		setState("search");
+		setSearchQuery(value.link);
+
+		setShowPopover(false);
+	};
+
 	// 入力の変更を監視
 	useEffect(() => {
 		debouncedSearch(searchQuery);
@@ -42,16 +95,6 @@ const SiteSearch = ({ onClick, onChange, onKeyDown }) => {
 			debouncedSearch.cancel();
 		};
 	}, [searchQuery]);
-
-	// 画面クリック時にPopoverを閉じる関数
-	const handleOutsideClick = (event) => {
-		if (
-			!event.target.closest(".search-results-popover") &&
-			!event.target.closest(".search-component")
-		) {
-			setShowPopover(false);
-		}
-	};
 
 	// useEffectを使ってクリックイベントリスナーを設定
 	useEffect(() => {
@@ -69,7 +112,7 @@ const SiteSearch = ({ onClick, onChange, onKeyDown }) => {
 					setSearchQuery(newSearchQuery);
 					onChange(newSearchQuery);
 				}}
-				onKeyDown={onKeyDown}
+				onKeyDown={handleKeyDown}
 				className="search-component"
 				placeholder="URLを入力 / サイト内検索の場合はキーワードを入力"
 			/>
@@ -79,11 +122,12 @@ const SiteSearch = ({ onClick, onChange, onKeyDown }) => {
 						{searchResults.map((post) => (
 							<li
 								key={post.id}
-								onClick={() => {
-									onClick(post);
-									setShowPopover(false);
-								}}
+								// onClick={() => {
+								// 	onClick(post);
+								// 	setShowPopover(false);
+								// }}
 								value={post}
+								onClick={() => handleClickResult(post)}
 							>
 								{/* <a href={post.link} target="_blank" rel="noopener noreferrer">
 								{post.title.rendered}
