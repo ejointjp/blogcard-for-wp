@@ -1,0 +1,81 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "su/blogcard",
+  "version": "0.1.0",
+  "title": "SU ブログカード",
+  "description": "",
+  "category": "humi-blocks",
+  "icon": "admin-links",
+  "keywords": [
+    "リンク",
+    "埋め込み",
+    "カード型",
+    "カード",
+    "card",
+    "embed",
+    "link"
+  ],
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "textdomain": "blogcard-for-wp",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "attributes": {
+    "url": {
+      "type": "string",
+      "default": ""
+    },
+    "target": {
+      "type": "string",
+      "default": "_blank"
+    },
+    "noopener": {
+      "type": "boolean",
+      "default": false
+    },
+    "nofollow": {
+      "type": "boolean",
+      "default": false
+    },
+    "noreferrer": {
+      "type": "boolean",
+      "default": false
+    },
+    "external": {
+      "type": "boolean",
+      "default": false
+    },
+    "sponsored": {
+      "type": "boolean",
+      "default": false
+    },
+    "ugc": {
+      "type": "boolean",
+      "default": false
+    },
+    "thumbnail": {
+      "type": "boolean",
+      "default": false
+    },
+    "json": {
+      "type": "object",
+      "default": {}
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "description": {
+      "type": "string",
+      "default": ""
+    },
+    "thumbnailUrl": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}

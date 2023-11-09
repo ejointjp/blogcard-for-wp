@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Blogcard for WP
+Plugin Name: Blogcard by Humi Blocks
 Plugin URI: https://e-joint.jp/works/blogcard-for-wp
 Description: URLを貼るだけで、ブログカード風のリンクが作れるGutenbergブロックです。
 Version:     1.0.7
@@ -27,44 +27,49 @@ along with WP Blogcard. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 
 include_once plugin_dir_path(__FILE__) . 'inc/return_json.php';
 
-add_action('init', 'wpbc_block_init');
-function wpbc_block_init()
-{
-  // Block JS
-  wp_register_script(
-    'wp-blogcard-editor',
-    plugins_url('dist/index.js', __FILE__),
-    [],
-    filemtime(plugin_dir_path(__FILE__) . 'dist/index.js'),
-    '',
-    true
-  );
-  wp_set_script_translations('wp-blogcard-editor', 'wpbc-blocks');
-
-  // Editor CSS
-  wp_register_style(
-    'wp-blogcard-editor',
-    plugins_url('dist/editor-style.css', __FILE__),
-    [],
-    filemtime(plugin_dir_path(__FILE__) . 'dist/editor-style.css'),
-    'all'
-  );
-
-  // Frontend CSS
-  wp_register_style(
-    'wp-blogcard',
-    plugins_url('dist/style.css', __FILE__),
-    [],
-    filemtime(plugin_dir_path(__FILE__) . 'dist/style.css'),
-    'all'
-  );
-
-  register_block_type('su/blogcard', [
-    'editor_script' => 'wp-blogcard-editor',
-    'editor_style'  => 'wp-blogcard-editor',
-    'style'         => 'wp-blogcard'
-  ]);
+function humib_blogcard_init() {
+	register_block_type(__DIR__ . '/build');
 }
+add_action('init', 'humib_blogcard_init');
+
+// add_action('init', 'wpbc_block_init');
+// function wpbc_block_init()
+// {
+//   // Block JS
+//   wp_register_script(
+//     'wp-blogcard-editor',
+//     plugins_url('dist/index.js', __FILE__),
+//     [],
+//     filemtime(plugin_dir_path(__FILE__) . 'dist/index.js'),
+//     '',
+//     true
+//   );
+//   wp_set_script_translations('wp-blogcard-editor', 'wpbc-blocks');
+
+//   // Editor CSS
+//   wp_register_style(
+//     'wp-blogcard-editor',
+//     plugins_url('dist/editor-style.css', __FILE__),
+//     [],
+//     filemtime(plugin_dir_path(__FILE__) . 'dist/editor-style.css'),
+//     'all'
+//   );
+
+//   // Frontend CSS
+//   wp_register_style(
+//     'wp-blogcard',
+//     plugins_url('dist/style.css', __FILE__),
+//     [],
+//     filemtime(plugin_dir_path(__FILE__) . 'dist/style.css'),
+//     'all'
+//   );
+
+//   register_block_type('su/blogcard', [
+//     'editor_script' => 'wp-blogcard-editor',
+//     'editor_style'  => 'wp-blogcard-editor',
+//     'style'         => 'wp-blogcard'
+//   ]);
+// }
 
 /**
  * Categories
@@ -89,7 +94,6 @@ if (!function_exists('su_categories')) {
   add_filter('block_categories_all', 'su_categories', 10, 2);
 }
 
-add_action('enqueue_block_editor_assets', 'wpbc_enqueue_block_editor_assets');
 function wpbc_enqueue_block_editor_assets()
 {
   /**
@@ -99,7 +103,7 @@ function wpbc_enqueue_block_editor_assets()
    * 第2引数: JavaScript内でのオブジェクト名
    * 第3引数: 渡したい値の配列
    */
-  wp_localize_script('wp-blogcard-editor', 'wpbcAjaxValues', [
+  wp_localize_script('su-blogcard-editor-script', 'wpbcAjaxValues', [
     'api' => admin_url('admin-ajax.php'),
     'action' => 'wpbc-action',
     'nonce' => wp_create_nonce('wpbc-ajax'),
@@ -107,6 +111,7 @@ function wpbc_enqueue_block_editor_assets()
     'nonceRemoveCache' => wp_create_nonce('wpbc-ajax-remove-cache') // cache削除用
   ]);
 }
+add_action('enqueue_block_editor_assets', 'wpbc_enqueue_block_editor_assets');
 
 
 /**
