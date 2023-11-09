@@ -12,6 +12,7 @@ body {
 }
 
 .wp-blogcard-item {
+	padding: 1.5rem;
 	display: flex;
 	flex-direction: row-reverse;
 	overflow: hidden;
@@ -21,6 +22,7 @@ body {
 	background-color: white;
 	border: 2px solid var(--humib-blogcard-border-base);
 	border-radius: 0.5rem;
+	gap: 1.5rem;
 
 	&:hover {
 		text-decoration: none;
@@ -29,21 +31,23 @@ body {
 
 .wp-blogcard-figure {
 	flex-shrink: 0;
-	width: 24%;
-	max-width: 14rem;
+	/* width: 24%;
+	max-width: 14rem; */
 	margin-bottom: 0;
 
 	& img {
 		object-fit: cover;
-		width: 100%;
-		height: 100%;
-		aspect-ratio: 16 / 9;
+		width: 4rem;
+		height: 4rem;
+		/* aspect-ratio: 16 / 9; */
+		aspect-ratio: 1 / 1;
+		border-radius: 0.25rem;
 	}
 }
 
 .wp-blogcard-content {
 	flex-grow: 1;
-	padding: 1rem;
+	/* padding: 1rem; */
 	display: grid;
 	gap: 0.5rem;
 

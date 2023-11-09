@@ -18,6 +18,7 @@ const { useState, useEffect } = wp.element;
 import ReactLoading from "react-loading";
 import he from "he"; // 特殊文字のデコード
 import Thumbnail from "./components/Thumbnail";
+import SiteSearch from "./components/SiteSearch";
 import { getDomainFromUrl, isValidUrl, faviconUrl } from "./util";
 
 export default function edit(props) {
@@ -40,10 +41,12 @@ export default function edit(props) {
 		},
 	} = props;
 
+	console.log("json", json);
 	const { setAttributes } = props;
 	const [tempUrl, setTempUrl] = useState(url); // URL入力時にapi叩きまくらないようにするため Enterを押すとurlにコピーされる
 	const [clearText, setClearText] = useState(""); // キャッシュをクリアしたときのメッセージ
 	const [state, setState] = useState("hidden"); // 状態ごとに表示を変えるため
+	const [postId, setPostId] = useState(); // サイト内検索から選択した場合、POST IDを保存
 	const api = wpbcAjaxValues.api;
 
 	const fetchData = async () => {
@@ -51,6 +54,7 @@ export default function edit(props) {
 		params.append("action", wpbcAjaxValues.action);
 		params.append("nonce", wpbcAjaxValues.nonce);
 		params.append("url", url);
+		if (postId) params.append("postId", postId);
 
 		try {
 			const res = await fetch(api, { method: "post", body: params });
@@ -73,7 +77,7 @@ export default function edit(props) {
 		}
 	};
 
-	const onKeyPress = (e) => {
+	const onKeyDown = (e) => {
 		// URL入力してEnterを押したら
 		if (e.key === "Enter") {
 			e.preventDefault();
@@ -146,10 +150,11 @@ export default function edit(props) {
 	const Display = () => {
 		switch (state) {
 			case "url-empty":
-				return <InfoText>URLを入力してください</InfoText>;
+				return <InfoText>URLまたはキーワードを入力してください</InfoText>;
 
 			case "url-invalid":
-				return <InfoText>正しいURLの形式で入力してください</InfoText>;
+				return;
+			// return <InfoText>検索結果はありません</InfoText>;
 
 			case "search":
 				return (
@@ -247,8 +252,36 @@ export default function edit(props) {
 		changeState();
 	}, [json]);
 
+	const onClickSiteSearch = (value) => {
+		console.log("value", value);
+		setPostId(value.id);
+		setTempUrl(value.link);
+		setSearchQuer;
+		setAttributes({ url: value.link });
+		setState("search");
+	};
+
 	return (
 		<>
+			<div {...blockProps}>
+				<div className="wp-blogcard-editor-url">
+					<SiteSearch
+						onClick={onClickSiteSearch}
+						onChange={(value) => setTempUrl(value)}
+						onKeyDown={onKeyDown}
+					/>
+					<PlainText
+						className="wp-blogcard-editor-input"
+						tagName="input"
+						placeholder="URLを入力してEnter"
+						value={tempUrl}
+						onChange={(value) => setTempUrl(value)}
+						onKeyDown={onKeyDown}
+					/>
+				</div>
+				<Display />
+			</div>
+
 			<InspectorControls>
 				<PanelBody
 					title={"ブロック設定"}
@@ -363,21 +396,6 @@ export default function edit(props) {
 					</MediaUploadCheck>
 				</PanelBody>
 			</InspectorControls>
-
-			<div {...blockProps}>
-				<div className="wp-blogcard-editor-url">
-					<PlainText
-						className="wp-blogcard-editor-input"
-						tagName="input"
-						placeholder="URLを入力してEnter"
-						value={tempUrl}
-						onChange={(value) => setTempUrl(value)}
-						onKeyPress={onKeyPress}
-					/>
-				</div>
-
-				<Display />
-			</div>
 		</>
 	);
 }

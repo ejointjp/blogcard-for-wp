@@ -5,6 +5,8 @@
  */
 function wpbc_json($attr, $transient = true)
 {
+  $post_id = $attr['postId'];
+
   // データベースのwp-optionsに登録されるoption_name
   $transient_name = wpbc_transient_name($attr['url']);
 
@@ -35,27 +37,38 @@ function wpbc_json($attr, $transient = true)
 
   /////////////////////////////////////////////////////
 
-  // titleタグからタイトルを取得
-  preg_match('/<title>(.*?)<\/title>/i', $html, $result);
-  // titleタグから取得できなければ og:title から
+  if($post_id) {
+    $title = get_the_title($post_id);
+  } else {
 
-  $title = $result[1] ? $result[1] : $og['title'];
-
+    // titleタグからタイトルを取得
+    preg_match('/<title>(.*?)<\/title>/i', $html, $result);
+    // titleタグから取得できなければ og:title から
+    
+    $title = $result[1] ? $result[1] : $og['title'];
+  }
+    
   /////////////////////////////////////////////////////
 
   // descriptionを取得
 
   /////////////////////////////////////////////////////
 
-  // metaタグからdescirptionを取得
-  $meta_tags = get_meta_tags($attr['url']);
+  if($post_id) {
+    $description = get_the_excerpt($post_id);
 
-  // descriptionタグから取得できなければ og:description から
-  $description = $meta_tags['description'] ? $meta_tags['description'] : $og['description'];
+  } else {
+    // metaタグからdescirptionを取得
+    $meta_tags = get_meta_tags($attr['url']);
 
-  // UTF-8に変換
-  $description = wpbc_convert_encoding($description);
-  $description = mb_strlen($description) > 100 ? mb_substr($description, 0, 100) . '...' : $description;
+    // descriptionタグから取得できなければ og:description から
+    $description = $meta_tags['description'] ? $meta_tags['description'] : $og['description'];
+
+    // UTF-8に変換
+    $description = wpbc_convert_encoding($description);
+    $description = mb_strlen($description) > 100 ? mb_substr($description, 0, 100) . '...' : $description;
+  }
+
 
   /////////////////////////////////////////////////////
 
@@ -65,11 +78,11 @@ function wpbc_json($attr, $transient = true)
 
   // 画像を取得
   // 自サイトの場合は $post_ID を取得
-  $post_ID = url_to_postid($attr['url']);
+  // $thumb_post_ID = url_to_postid($attr['url']);
 
-  if ($post_ID !== 0 && has_post_thumbnail($post_ID)) {
+  if ($post_id && has_post_thumbnail($post_id)) {
     // 自サイトの場合はアイキャッチを表示
-    $thumbnail = get_the_post_thumbnail_url($post_ID, 'medium_large');
+    $thumbnail = get_the_post_thumbnail_url($post_id, 'medium_large');
   } elseif (isset($og['image']) && wpbc_url_exists($og['image'])) {
     // og:image がある場合は表示
     $thumbnail = $og['image'];
@@ -95,13 +108,16 @@ function wpbc_json($attr, $transient = true)
     $return_arr = [
       'title' => $title,
       'description' => $description,
-      'hasFavicon' => $has_favicon
+      'hasFavicon' => $has_favicon,
+      'postId' => $post_id,
+      'ttttt' => get_the_title($post_id)
     ];
 
     // サムネイルがあれば返却
     if ($thumbnail) {
       $return_arr['thumbnail'] = $thumbnail;
     }
+
 
     // wp-optionにキャッシュを保存
     if ($transient) {

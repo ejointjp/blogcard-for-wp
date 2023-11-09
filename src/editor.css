@@ -1,10 +1,10 @@
 /* For Editor */
 
-.wp-blogcard-editor {
+/* .wp-blogcard-editor {
 	padding: 1rem;
 	background-color: var(--su-zinc-100, #f4f4f5);
 	border-radius: 0.5rem;
-}
+} */
 
 .wp-blogcard-editor-input {
 	padding: 0.5rem;
@@ -26,4 +26,22 @@
 	gap: 0.5rem;
 	align-items: center;
 	font-size: 0.625rem;
+}
+
+.wp-blogcard-site-search {
+}
+
+.wp-blogcard-site-search-results {
+	position: relative;
+
+	& ul {
+		margin: 0;
+		list-style: none;
+
+		position: absolute;
+		right: 0;
+		left: 0;
+		top: 0;
+		background-color: pink;
+	}
 }
