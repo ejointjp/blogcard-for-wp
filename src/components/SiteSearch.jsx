@@ -1,12 +1,15 @@
 import { useState, useEffect } from "@wordpress/element";
-import { SearchControl, Popover } from "@wordpress/components";
+import { SearchControl } from "@wordpress/components";
 import debounce from "lodash.debounce";
 import { isValidUrl } from "../util";
+import { SharedContext } from "../libs/contextProvider";
+import { useContext } from "@wordpress/element";
 
 const SiteSearch = ({ onClick, onChange, onKeyDown }) => {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [searchResults, setSearchResults] = useState([]);
 	const [showPopover, setShowPopover] = useState(false);
+	const { sharedState, setSharedState } = useContext(SharedContext);
 
 	// 非同期検索関数
 	const performSearch = (query) => {
@@ -42,7 +45,6 @@ const SiteSearch = ({ onClick, onChange, onKeyDown }) => {
 
 	// 画面クリック時にPopoverを閉じる関数
 	const handleOutsideClick = (event) => {
-		console.log("event");
 		if (
 			!event.target.closest(".search-results-popover") &&
 			!event.target.closest(".search-component")
