@@ -1,9 +1,8 @@
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useContext } from '@wordpress/element';
 import { SearchControl } from '@wordpress/components';
 import debounce from 'lodash.debounce';
 import { isValidUrl } from '../util';
 import { SharedContext } from '../libs/contextProvider';
-import { useContext } from '@wordpress/element';
 
 export default function SiteSearch({ attributes, setAttributes }) {
 	const api = HUMIBLOGCARD.api;
@@ -157,7 +156,7 @@ export default function SiteSearch({ attributes, setAttributes }) {
 	}, []);
 
 	return (
-		<>
+		<div className="wp-block-humi-blogcard-editor-site-search">
 			<SearchControl
 				className="search-component"
 				label="検索"
@@ -167,7 +166,7 @@ export default function SiteSearch({ attributes, setAttributes }) {
 				onKeyDown={handleKeyDown}
 			/>
 			{showPopover && !isValidUrl(searchQuery) && (
-				<div className="wp-blogcard-editor-site-search-results">
+				<div className="wp-block-humi-blogcard-editor-site-search-results">
 					<ul className="">
 						{searchResults.map((post) => (
 							<li key={post.id} value={post} onClick={() => handleClickResult(post)}>
@@ -177,6 +176,6 @@ export default function SiteSearch({ attributes, setAttributes }) {
 					</ul>
 				</div>
 			)}
-		</>
+		</div>
 	);
 }

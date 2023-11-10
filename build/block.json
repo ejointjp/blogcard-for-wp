@@ -1,9 +1,9 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "su/blogcard",
+  "name": "humi/blogcard",
   "version": "0.1.0",
-  "title": "SU ブログカード",
+  "title": "Humi ブログカード",
   "description": "",
   "category": "humi-blocks",
   "icon": "admin-links",
@@ -20,7 +20,7 @@
   "supports": {
     "html": false
   },
-  "textdomain": "blogcard-for-wp",
+  "textdomain": "humi-blogcard",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",

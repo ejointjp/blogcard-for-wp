@@ -11,7 +11,7 @@ body {
 	--humi-blogcard-border-base: #e4e4e8;
 }
 
-.wp-block-su-blogcard {
+.wp-block-humi-blogcard {
 	container-type: inline-size;
 }
 

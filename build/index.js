@@ -16,17 +16,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _libs_contextProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../libs/contextProvider */ "./src/libs/contextProvider.js");
-/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
-/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _SiteSearch__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SiteSearch */ "./src/components/SiteSearch.jsx");
-/* harmony import */ var _Controls__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Controls */ "./src/components/Controls.jsx");
-/* harmony import */ var _Result__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Result */ "./src/components/Result.jsx");
-
-
-
+/* harmony import */ var _SiteSearch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SiteSearch */ "./src/components/SiteSearch.jsx");
+/* harmony import */ var _Controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Controls */ "./src/components/Controls.jsx");
+/* harmony import */ var _Display__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Display */ "./src/components/Display.jsx");
 
 
 
@@ -36,54 +28,20 @@ function Blogcard({
   props
 }) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
-    className: 'wp-blogcard-editor'
+    className: 'wp-block-humi-blogcard-editor'
   });
   const {
     attributes,
     setAttributes
   } = props;
-  const {
-    state
-  } = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useContext)(_libs_contextProvider__WEBPACK_IMPORTED_MODULE_3__.SharedContext);
-  const InfoText = props => {
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "text-sm text-gray-600 mt-2"
-    }, props.children);
-  };
-  const Display = () => {
-    switch (state) {
-      case 'url-empty':
-        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(InfoText, null, "URL\u307E\u305F\u306F\u30AD\u30FC\u30EF\u30FC\u30C9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044");
-      case 'url-invalid':
-        return;
-      // return <InfoText>検索結果はありません</InfoText>;
-
-      case 'search':
-        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((react_loading__WEBPACK_IMPORTED_MODULE_4___default()), {
-          class: "mt-2",
-          type: "spin",
-          color: "rgb(253 210 59)",
-          width: "20px",
-          height: "20px"
-        });
-      case 'data-success':
-        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Result__WEBPACK_IMPORTED_MODULE_7__["default"], {
-          attributes: attributes
-        });
-      case 'fetch-error':
-        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(InfoText, null, "\u30C7\u30FC\u30BF\u3092\u53D6\u5F97\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F"));
-      default:
-        return '';
-    }
-  };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-blogcard-editor-site-search"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_SiteSearch__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_SiteSearch__WEBPACK_IMPORTED_MODULE_2__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(Display, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Controls__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Display__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    attributes: attributes
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Controls__WEBPACK_IMPORTED_MODULE_3__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
   }));
@@ -275,6 +233,67 @@ function Controls({
 
 /***/ }),
 
+/***/ "./src/components/Display.jsx":
+/*!************************************!*\
+  !*** ./src/components/Display.jsx ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Display)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _libs_contextProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../libs/contextProvider */ "./src/libs/contextProvider.js");
+/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
+/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Result__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Result */ "./src/components/Result.jsx");
+
+
+
+
+
+function Display({
+  attributes
+}) {
+  const {
+    state
+  } = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useContext)(_libs_contextProvider__WEBPACK_IMPORTED_MODULE_2__.SharedContext);
+  const InfoText = props => {
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "text-sm text-gray-600 mt-2"
+    }, props.children);
+  };
+  switch (state) {
+    case 'url-empty':
+      return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(InfoText, null, "URL\u307E\u305F\u306F\u30AD\u30FC\u30EF\u30FC\u30C9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044");
+    case 'url-invalid':
+      return;
+    case 'search':
+      return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((react_loading__WEBPACK_IMPORTED_MODULE_3___default()), {
+        class: "mt-2",
+        type: "spin",
+        color: "rgb(253 210 59)",
+        width: "20px",
+        height: "20px"
+      });
+    case 'data-success':
+      return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Result__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        attributes: attributes
+      });
+    case 'fetch-error':
+      return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(InfoText, null, "\u30C7\u30FC\u30BF\u3092\u53D6\u5F97\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F"));
+    default:
+      return '';
+  }
+}
+
+/***/ }),
+
 /***/ "./src/components/Result.jsx":
 /*!***********************************!*\
   !*** ./src/components/Result.jsx ***!
@@ -339,9 +358,9 @@ function Result({
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wp-blogcard-domain"
   }, domain)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-blogcard-editor-footer"
+    className: "wp-block-humi-blogcard-editor-footer"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    className: "wp-blogcard-editor-link components-button is-secondary button-small"
+    className: "wp-block-humi-blogcard-editor-link components-button is-secondary button-small"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: url,
     target: "blank noopener noreferrer"
@@ -371,7 +390,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util */ "./src/util.js");
 /* harmony import */ var _libs_contextProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../libs/contextProvider */ "./src/libs/contextProvider.js");
-
 
 
 
@@ -543,7 +561,9 @@ function SiteSearch({
       document.removeEventListener('click', handleOutsideClick);
     };
   }, []);
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SearchControl, {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wp-block-humi-blogcard-editor-site-search"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SearchControl, {
     className: "search-component",
     label: "\u691C\u7D22",
     placeholder: "URL\u3092\u5165\u529B\u3057\u3066Enter / \u30B5\u30A4\u30C8\u5185\u691C\u7D22\u306E\u5834\u5408\u306F\u30AD\u30FC\u30EF\u30FC\u30C9\u3092\u5165\u529B",
@@ -551,7 +571,7 @@ function SiteSearch({
     onChange: value => setSearchQuery(value),
     onKeyDown: handleKeyDown
   }), showPopover && !(0,_util__WEBPACK_IMPORTED_MODULE_4__.isValidUrl)(searchQuery) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-blogcard-editor-site-search-results"
+    className: "wp-block-humi-blogcard-editor-site-search-results"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
     className: ""
   }, searchResults.map(post => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
@@ -4492,7 +4512,7 @@ module.exports = window["wp"]["element"];
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"su/blogcard","version":"0.1.0","title":"SU ブログカード","description":"","category":"humi-blocks","icon":"admin-links","keywords":["リンク","埋め込み","カード型","カード","card","embed","link"],"example":{},"supports":{"html":false},"textdomain":"blogcard-for-wp","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","attributes":{"url":{"type":"string","default":""},"target":{"type":"string","default":"_blank"},"noopener":{"type":"boolean","default":false},"nofollow":{"type":"boolean","default":false},"noreferrer":{"type":"boolean","default":false},"external":{"type":"boolean","default":false},"sponsored":{"type":"boolean","default":false},"ugc":{"type":"boolean","default":false},"thumbnail":{"type":"boolean","default":false},"json":{"type":"object","default":{}},"title":{"type":"string","default":""},"description":{"type":"string","default":""},"thumbnailUrl":{"type":"string","default":""}}}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"humi/blogcard","version":"0.1.0","title":"Humi ブログカード","description":"","category":"humi-blocks","icon":"admin-links","keywords":["リンク","埋め込み","カード型","カード","card","embed","link"],"example":{},"supports":{"html":false},"textdomain":"humi-blogcard","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","attributes":{"url":{"type":"string","default":""},"target":{"type":"string","default":"_blank"},"noopener":{"type":"boolean","default":false},"nofollow":{"type":"boolean","default":false},"noreferrer":{"type":"boolean","default":false},"external":{"type":"boolean","default":false},"sponsored":{"type":"boolean","default":false},"ugc":{"type":"boolean","default":false},"thumbnail":{"type":"boolean","default":false},"json":{"type":"object","default":{}},"title":{"type":"string","default":""},"description":{"type":"string","default":""},"thumbnailUrl":{"type":"string","default":""}}}');
 
 /***/ })
 

@@ -38,8 +38,8 @@ export default function Result({ attributes }) {
 					</div>
 				</div>
 			</div>
-			<div className="wp-blogcard-editor-footer">
-				<button className="wp-blogcard-editor-link components-button is-secondary button-small">
+			<div className="wp-block-humi-blogcard-editor-footer">
+				<button className="wp-block-humi-blogcard-editor-link components-button is-secondary button-small">
 					<a href={url} target="blank noopener noreferrer">
 						リンクを表示
 					</a>
