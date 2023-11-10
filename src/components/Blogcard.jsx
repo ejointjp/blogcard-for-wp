@@ -14,7 +14,7 @@ export default function Blogcard({ props }) {
 	const blockProps = useBlockProps({ className: 'wp-blogcard-editor' });
 	const { attributes, setAttributes } = props;
 	const { url, json } = attributes;
-	const { postId, state, setState, setTempUrl } = useContext(SharedContext);
+	const { postId, state, setState } = useContext(SharedContext);
 
 	const fetchData = async () => {
 		const params = new URLSearchParams();
@@ -123,20 +123,7 @@ export default function Blogcard({ props }) {
 		<>
 			<div {...blockProps}>
 				<div className="wp-blogcard-editor-site-search">
-					<SiteSearch
-						// onClick={onClickSiteSearch}
-						onChange={(value) => setTempUrl(value)}
-						attributes={attributes}
-						setAttributes={setAttributes}
-					/>
-					{/* <PlainText
-						className="wp-blogcard-editor-input"
-						tagName="input"
-						placeholder="URLを入力してEnter"
-						value={tempUrl}
-						onChange={(value) => setTempUrl(value)}
-						onKeyDown={onKeyDown}
-					/> */}
+					<SiteSearch attributes={attributes} setAttributes={setAttributes} />
 				</div>
 				<Display />
 			</div>

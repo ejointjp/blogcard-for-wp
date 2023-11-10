@@ -5,12 +5,11 @@ import { isValidUrl } from '../util';
 import { SharedContext } from '../libs/contextProvider';
 import { useContext } from '@wordpress/element';
 
-const SiteSearch = ({ onChange, attributes, setAttributes }) => {
+const SiteSearch = ({ attributes, setAttributes }) => {
 	const { url } = attributes;
 	const [searchResults, setSearchResults] = useState([]);
 	const [showPopover, setShowPopover] = useState(false);
-	const { setPostId, searchQuery, setSearchQuery, setState, tempUrl, setTempUrl } =
-		useContext(SharedContext);
+	const { setPostId, searchQuery, setSearchQuery, setState } = useContext(SharedContext);
 
 	// 非同期検索関数
 	const performSearch = (query) => {
@@ -35,8 +34,8 @@ const SiteSearch = ({ onChange, attributes, setAttributes }) => {
 		}
 	}, 300);
 
-	// 画面クリック時にPopoverを閉じる関数
-	const handleOutsideClick = (event) => {
+	// 画面クリック時にPopoverを閉じる
+	const handleOutsideClick = () => {
 		setShowPopover(false);
 	};
 
@@ -45,37 +44,32 @@ const SiteSearch = ({ onChange, attributes, setAttributes }) => {
 		if (e.key === 'Enter') {
 			e.preventDefault();
 
-			// URLが空なら
-			if (tempUrl === '') {
+			// 前のURLと同じなら何もしない
+			if (searchQuery === url) {
+				return;
+			}
+
+			// 検索バーが空なら何もしない
+			if (searchQuery === '') {
 				setState('url-empty');
 				return false;
 			}
-			// 渡される前にURLの形式チェック
-			if (!isValidUrl(tempUrl)) {
-				setState('url-invalid');
-				return false;
-			}
 
-			// 前のURLから変更がなければ何もしない
-			if (tempUrl === url) {
-				return false;
+			// URLの形式ならURLを登録する（検索がはじまる）
+			if (isValidUrl(searchQuery)) {
+				setAttributes({ url: searchQuery });
+				// 検索モード
+				setState('search');
 			}
-
-			// 入力URLを実際のURLに渡す（検索がはじまる）
-			setAttributes({ url: tempUrl });
-			// 検索モード
-			setState('search');
 		}
 	};
 
 	// サイト内検索の結果をクリックしたら
 	const handleClickResult = (value) => {
-		setPostId(value.id);
-		setTempUrl(value.link);
 		setAttributes({ url: value.link });
-		setState('search');
+		setPostId(value.id);
 		setSearchQuery(value.link);
-
+		setState('search');
 		setShowPopover(false);
 	};
 
@@ -95,15 +89,16 @@ const SiteSearch = ({ onChange, attributes, setAttributes }) => {
 			document.removeEventListener('click', handleOutsideClick);
 		};
 	}, []);
+
+	console.log('searchQuery', searchQuery);
+	console.log('url', url);
+
 	return (
 		<>
 			<SearchControl
 				label="検索"
 				value={searchQuery}
-				onChange={(newSearchQuery) => {
-					setSearchQuery(newSearchQuery);
-					onChange(newSearchQuery);
-				}}
+				onChange={(value) => setSearchQuery(value)}
 				onKeyDown={handleKeyDown}
 				className="search-component"
 				placeholder="URLを入力してEnter / サイト内検索の場合はキーワードを入力"

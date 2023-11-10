@@ -6,6 +6,11 @@
 	border-radius: 0.5rem;
 } */
 
+.wp-block-su-blogcard {
+	position: relative;
+	z-index: 99999;
+}
+
 .wp-blogcard-editor-site-search {
 	display: none;
 }
@@ -16,8 +21,10 @@
 
 .wp-blogcard-editor-site-search-results {
 	position: relative;
+	z-index: 99999;
 
 	& ul {
+		z-index: 99999;
 		margin: 0;
 		padding: 0;
 		list-style: none;
