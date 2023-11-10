@@ -1,22 +1,16 @@
-import { useState, useEffect } from "@wordpress/element";
-import { SearchControl } from "@wordpress/components";
-import debounce from "lodash.debounce";
-import { isValidUrl } from "../util";
-import { SharedContext } from "../libs/contextProvider";
-import { useContext } from "@wordpress/element";
+import { useState, useEffect } from '@wordpress/element';
+import { SearchControl } from '@wordpress/components';
+import debounce from 'lodash.debounce';
+import { isValidUrl } from '../util';
+import { SharedContext } from '../libs/contextProvider';
+import { useContext } from '@wordpress/element';
 
 const SiteSearch = ({ onChange, attributes, setAttributes }) => {
 	const { url } = attributes;
 	const [searchResults, setSearchResults] = useState([]);
 	const [showPopover, setShowPopover] = useState(false);
-	const {
-		setPostId,
-		searchQuery,
-		setSearchQuery,
-		setState,
-		tempUrl,
-		setTempUrl,
-	} = useContext(SharedContext);
+	const { setPostId, searchQuery, setSearchQuery, setState, tempUrl, setTempUrl } =
+		useContext(SharedContext);
 
 	// 非同期検索関数
 	const performSearch = (query) => {
@@ -27,7 +21,7 @@ const SiteSearch = ({ onChange, attributes, setAttributes }) => {
 				setShowPopover(posts.length > 0);
 			})
 			.catch((error) => {
-				console.error("エラーが発生しました:", error);
+				console.error('エラーが発生しました:', error);
 			});
 	};
 
@@ -48,17 +42,17 @@ const SiteSearch = ({ onChange, attributes, setAttributes }) => {
 
 	// Enterを押したら
 	const handleKeyDown = (e) => {
-		if (e.key === "Enter") {
+		if (e.key === 'Enter') {
 			e.preventDefault();
 
 			// URLが空なら
-			if (tempUrl === "") {
-				setState("url-empty");
+			if (tempUrl === '') {
+				setState('url-empty');
 				return false;
 			}
 			// 渡される前にURLの形式チェック
 			if (!isValidUrl(tempUrl)) {
-				setState("url-invalid");
+				setState('url-invalid');
 				return false;
 			}
 
@@ -70,17 +64,16 @@ const SiteSearch = ({ onChange, attributes, setAttributes }) => {
 			// 入力URLを実際のURLに渡す（検索がはじまる）
 			setAttributes({ url: tempUrl });
 			// 検索モード
-			setState("search");
+			setState('search');
 		}
 	};
 
 	// サイト内検索の結果をクリックしたら
 	const handleClickResult = (value) => {
-		console.log("value", value);
 		setPostId(value.id);
 		setTempUrl(value.link);
 		setAttributes({ url: value.link });
-		setState("search");
+		setState('search');
 		setSearchQuery(value.link);
 
 		setShowPopover(false);
@@ -97,9 +90,9 @@ const SiteSearch = ({ onChange, attributes, setAttributes }) => {
 
 	// useEffectを使ってクリックイベントリスナーを設定
 	useEffect(() => {
-		document.addEventListener("click", handleOutsideClick);
+		document.addEventListener('click', handleOutsideClick);
 		return () => {
-			document.removeEventListener("click", handleOutsideClick);
+			document.removeEventListener('click', handleOutsideClick);
 		};
 	}, []);
 	return (

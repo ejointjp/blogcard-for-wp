@@ -1,11 +1,10 @@
-import { createContext, useState } from "@wordpress/element";
+import { createContext, useState } from '@wordpress/element';
 
 export const SharedContext = createContext();
 
 export function SharedContextProvider({ children, defaultUrl }) {
-	console.log("defaultUrl", defaultUrl);
-	const [state, setState] = useState("hidden"); // 状態ごとに表示を変えるため
-	const [tempUrl, setTempUrl] = useState(""); // URL入力時にapi叩きまくらないようにするため Enterを押すとurlにコピーされる
+	const [state, setState] = useState('hidden'); // 状態ごとに表示を変えるため
+	const [tempUrl, setTempUrl] = useState(''); // URL入力時にapi叩きまくらないようにするため Enterを押すとurlにコピーされる
 	const [searchQuery, setSearchQuery] = useState(defaultUrl);
 	const [postId, setPostId] = useState(); // サイト内検索から選択した場合、POST IDを保存
 

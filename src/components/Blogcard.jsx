@@ -15,7 +15,6 @@ export default function Blogcard({ props }) {
 	const { attributes, setAttributes } = props;
 	const { url, json } = attributes;
 	const { postId, state, setState, setTempUrl } = useContext(SharedContext);
-	console.log('json', json);
 
 	const fetchData = async () => {
 		const params = new URLSearchParams();
