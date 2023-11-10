@@ -1,5 +1,6 @@
 body {
 	--humib-bg-base: #f1f1f7;
+	--humib-text-base: #222227;
 	--humib-text-light: #5b5b62;
 	--humib-border-base: #e4e4e8;
 }
@@ -18,10 +19,11 @@ body {
 	flex-direction: row-reverse;
 	overflow: hidden;
 	line-height: 1.5;
-	cursor: pointer;
 	background-color: white;
 	border: 2px solid var(--humib-border-base);
 	border-radius: 0.5rem;
+	color: var(--humib-text-base);
+
 	gap: 1.5rem;
 
 	&:hover {
@@ -77,13 +79,16 @@ body {
 
 .humibbc-favicon {
 	border-radius: 0.125rem;
-	color: var(--humib-text-light);
 }
 
 .humibbc-domain {
 	font-size: 0.75rem;
-
 	font-style: italic;
+	color: var(--humib-text-light);
+
+	&:hover {
+		color: var(--humi-text-light);
+	}
 }
 
 @container (768px <= width) {

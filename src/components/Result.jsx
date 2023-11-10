@@ -9,7 +9,7 @@ export default function Result({ attributes }) {
 	const domain = getDomainFromUrl(url);
 
 	return (
-		<div className="humibbc">
+		<article className="humibbc">
 			<div className="humibbc-item">
 				{!thumbnail && (
 					<figure className="humibbc-figure">
@@ -40,6 +40,6 @@ export default function Result({ attributes }) {
 					</a>
 				</button>
 			</div>
-		</div>
+		</article>
 	);
 }

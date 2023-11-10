@@ -28,7 +28,7 @@ export default function SiteSearch({ attributes, setAttributes }) {
 	const performSearch = async (query) => {
 		try {
 			// 各エンドポイントからのレスポンスを並行して取得
-			const [postsResponse, pagesResponse, customTypeResponse] = await Promise.all([
+			const [postsResponse, pagesResponse] = await Promise.all([
 				fetch(`/wp-json/wp/v2/posts?search=${encodeURIComponent(query)}`),
 				fetch(`/wp-json/wp/v2/pages?search=${encodeURIComponent(query)}`),
 				// fetch(`/wp-json/wp/v2/your_custom_post_type?search=${encodeURIComponent(query)}`),
@@ -167,7 +167,6 @@ export default function SiteSearch({ attributes, setAttributes }) {
 				value={searchQuery}
 				onChange={(value) => setSearchQuery(value)}
 				onKeyDown={handleKeyDown}
-				// onBlur={() => setShowPopover(false)} // フォーカスが外れたときにshowPopoverをfalseにする
 			/>
 			{showPopover && !isValidUrl(searchQuery) && (
 				<div className="humibbc-search-results">

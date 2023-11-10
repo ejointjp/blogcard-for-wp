@@ -1,7 +1,8 @@
 import he from 'he';
 import Thumbnail from './components/Thumbnail';
 import { getDomainFromUrl, faviconUrl } from './util';
-const { useBlockProps } = wp.blockEditor;
+// const { useBlockProps } = wp.blockEditor;
+import { useBlockProps } from '@wordpress/block-editor';
 
 export default function save(props) {
 	const blockProps = useBlockProps.save();
@@ -42,7 +43,7 @@ export default function save(props) {
 		<>
 			{!isDataEmpty && (
 				<div {...blockProps}>
-					<blockquote className="humibbc" cite={url}>
+					<article className="humibbc" cite={url}>
 						<a
 							className="humibbc-item"
 							href={url}
@@ -76,7 +77,7 @@ export default function save(props) {
 								</div>
 							</div>
 						</a>
-					</blockquote>
+					</article>
 				</div>
 			)}
 		</>
