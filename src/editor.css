@@ -21,29 +21,39 @@
 
 .humibbc-search-results {
 	position: relative;
+	box-shadow: 0 4px 8px -4px rgb(0 0 0 /20%);
+	border-radius: 0.25rem;
+	background-color: white;
+	border: 1px solid var(--humib-border-base);
+	max-height: 70svh;
+	overflow: scroll;
+	font-size: 0.75rem;
 
-	& ul {
-		box-shadow: 0 4px 8px -4px rgb(0 0 0 /20%);
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		border-radius: 0.25rem;
+	& > .humibbc-search-results-item {
+		& > p {
+			font-weight: bold;
+			margin: 0 1rem;
+			padding: 0.5rem 0;
+			/* border-bottom: 1px solid var(--humib-bg-base); */
+		}
 
-		position: absolute;
-		right: 0;
-		left: 0;
-		top: 0;
-		background-color: white;
-		border: 1px solid var(--humib-border-base);
-		font-size: 0.875rem;
-	}
+		& > ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
 
-	& li {
-		padding: 0.75rem 1rem;
-		cursor: pointer;
+			& > li {
+				padding: 0.5rem 1rem;
+				cursor: pointer;
 
-		&:hover {
-			background-color: var(--humib-bg-base);
+				&:hover {
+					background-color: var(--humib-bg-base);
+				}
+			}
+		}
+
+		& + .humibbc-search-results-item {
+			border-top: 1px solid var(--humib-border-base);
 		}
 	}
 }

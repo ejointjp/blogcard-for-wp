@@ -8,20 +8,48 @@ export default function SiteSearch({ attributes, setAttributes }) {
 	const api = HUMIBLOGCARD.api;
 	const { url, json } = attributes;
 	const [searchResults, setSearchResults] = useState([]);
+	const [searchPageResults, setSearchPageResults] = useState([]);
+
 	const [showPopover, setShowPopover] = useState(false);
 	const { postId, setPostId, searchQuery, setSearchQuery, setState } = useContext(SharedContext);
 
 	// 非同期検索関数
-	const performSearch = (query) => {
-		fetch(`/wp-json/wp/v2/posts?search=${encodeURIComponent(query)}`)
-			.then((response) => response.json())
-			.then((posts) => {
-				setSearchResults(posts);
-				setShowPopover(posts.length > 0);
-			})
-			.catch((error) => {
-				console.error('エラーが発生しました:', error);
-			});
+	// const performSearch = (query) => {
+	// 	fetch(`/wp-json/wp/v2/posts?search=${encodeURIComponent(query)}`)
+	// 		.then((response) => response.json())
+	// 		.then((posts) => {
+	// 			setSearchResults(posts);
+	// 			setShowPopover(posts.length > 0);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error('エラーが発生しました:', error);
+	// 		});
+	// };
+	const performSearch = async (query) => {
+		try {
+			// 各エンドポイントからのレスポンスを並行して取得
+			const [postsResponse, pagesResponse, customTypeResponse] = await Promise.all([
+				fetch(`/wp-json/wp/v2/posts?search=${encodeURIComponent(query)}`),
+				fetch(`/wp-json/wp/v2/pages?search=${encodeURIComponent(query)}`),
+				// fetch(`/wp-json/wp/v2/your_custom_post_type?search=${encodeURIComponent(query)}`),
+			]);
+
+			// 各レスポンスからJSONを取得
+			const posts = await postsResponse.json();
+			const pages = await pagesResponse.json();
+			// const customPosts = await customTypeResponse.json();
+
+			// 結果を統合
+			// const combinedResults = [...posts, ...pages, ...customPosts];
+			const combinedResults = [...posts, ...pages];
+
+			// 結果を設定
+			setSearchResults(posts);
+			setSearchPageResults(pages);
+			setShowPopover(combinedResults.length > 0);
+		} catch (error) {
+			console.error('エラーが発生しました:', error);
+		}
 	};
 
 	const fetchData = async (url) => {
@@ -77,11 +105,6 @@ export default function SiteSearch({ attributes, setAttributes }) {
 			setShowPopover(false);
 		}
 	}, 300);
-
-	// 画面クリック時にPopoverを閉じる
-	const handleOutsideClick = () => {
-		setShowPopover(false);
-	};
 
 	// Enterを押したら
 	const handleKeyDown = (e) => {
@@ -148,13 +171,27 @@ export default function SiteSearch({ attributes, setAttributes }) {
 			/>
 			{showPopover && !isValidUrl(searchQuery) && (
 				<div className="humibbc-search-results">
-					<ul className="">
-						{searchResults.map((post) => (
-							<li key={post.id} value={post} onClick={() => handleClickResult(post)}>
-								{post.title.rendered}
-							</li>
-						))}
-					</ul>
+					<div className="humibbc-search-results-item">
+						<p>投稿</p>
+						<ul className="">
+							{searchResults.map((post) => (
+								<li key={post.id} value={post} onClick={() => handleClickResult(post)}>
+									{post.title.rendered}
+								</li>
+							))}
+						</ul>
+					</div>
+
+					<div className="humibbc-search-results-item">
+						<p>固定ページ</p>
+						<ul className="">
+							{searchPageResults.map((post) => (
+								<li key={post.id} value={post} onClick={() => handleClickResult(post)}>
+									{post.title.rendered}
+								</li>
+							))}
+						</ul>
+					</div>
 				</div>
 			)}
 		</div>
