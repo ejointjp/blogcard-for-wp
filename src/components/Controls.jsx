@@ -16,7 +16,7 @@ import {
 
 export default function Controls({ attributes, setAttributes }) {
 	const ALLOWED_MEDIA_TYPES = ["image"];
-	const api = wpbcAjaxValues.api;
+	const api = HUMIBLOGCARD.api;
 
 	const {
 		url,
@@ -38,8 +38,8 @@ export default function Controls({ attributes, setAttributes }) {
 
 	const removeCache = async () => {
 		const params = new URLSearchParams();
-		params.append("action", wpbcAjaxValues.actionRemoveCache);
-		params.append("nonce", wpbcAjaxValues.nonceRemoveCache);
+		params.append("action", HUMIBLOGCARD.actionRemoveCache);
+		params.append("nonce", HUMIBLOGCARD.nonceRemoveCache);
 		params.append("url", url);
 
 		const res = await fetch(api, { method: "post", body: params });

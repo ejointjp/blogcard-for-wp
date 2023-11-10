@@ -1,5 +1,5 @@
-import { SharedContextProvider } from "./libs/contextProvider";
-import Blogcard from "./components/Blogcard";
+import { SharedContextProvider } from './libs/contextProvider';
+import Blogcard from './components/Blogcard';
 
 export default function edit(props) {
 	return (

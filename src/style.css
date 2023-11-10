@@ -3,9 +3,9 @@
 /* @import "./_mixins.css"; */
 
 body {
-	--humib-blogcard-bg-base: #f1f1f7;
-	--humib-blogcard-text-light: #5b5b62;
-	--humib-blogcard-border-base: #e4e4e8;
+	--humi-blogcard-bg-base: #f1f1f7;
+	--humi-blogcard-text-light: #5b5b62;
+	--humi-blogcard-border-base: #e4e4e8;
 }
 
 .wp-block-su-blogcard {
@@ -22,10 +22,10 @@ body {
 	flex-direction: row-reverse;
 	overflow: hidden;
 	line-height: 1.5;
-	color: var(--humib-blogcard-text-light);
+	color: var(--humi-blogcard-text-light);
 	cursor: pointer;
 	background-color: white;
-	border: 2px solid var(--humib-blogcard-border-base);
+	border: 2px solid var(--humi-blogcard-border-base);
 	border-radius: 0.5rem;
 	gap: 1.5rem;
 

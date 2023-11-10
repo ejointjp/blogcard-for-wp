@@ -28,7 +28,7 @@
 		left: 0;
 		top: 0;
 		background-color: white;
-		border: 1px solid var(--humib-blogcard-border-base);
+		border: 1px solid var(--humi-blogcard-border-base);
 		font-size: 0.875rem;
 	}
 
@@ -37,7 +37,7 @@
 		cursor: pointer;
 
 		&:hover {
-			background-color: var(--humib-blogcard-bg-base);
+			background-color: var(--humi-blogcard-bg-base);
 		}
 	}
 }

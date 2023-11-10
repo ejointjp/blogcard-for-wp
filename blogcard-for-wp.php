@@ -27,12 +27,10 @@ along with WP Blogcard. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 
 include_once plugin_dir_path(__FILE__) . 'inc/return_json.php';
 
-
-function humib_blogcard_init() 
-{
+function humi_blogcard_init() {
 	register_block_type(__DIR__ . '/build');
 }
-add_action('init', 'humib_blogcard_init');
+add_action('init', 'humi_blogcard_init');
 
 /**
  * Categories
@@ -41,68 +39,57 @@ add_action('init', 'humib_blogcard_init');
  * @param array $post Post.
  */
 if (!function_exists('su_categories')) {
-  function su_categories($categories, $post)
-  {
-    return array_merge(
-      $categories,
-      [
-        [
-          'slug'  => 'su',   // ブロックカテゴリーのスラッグ.
-          'title' => 'su blocks'  // ブロックカテゴリーの表示名.
-          // 'icon'  => 'wordpress',    //アイコンの指定（Dashicons名）.
-        ]
-      ]
-    );
-  }
-  add_filter('block_categories_all', 'su_categories', 10, 2);
+	function su_categories($categories, $post) {
+		return array_merge($categories, [
+			[
+				'slug' => 'su', // ブロックカテゴリーのスラッグ.
+				'title' => 'su blocks', // ブロックカテゴリーの表示名.
+				// 'icon'  => 'wordpress',    //アイコンの指定（Dashicons名）.
+			],
+		]);
+	}
+	add_filter('block_categories_all', 'su_categories', 10, 2);
 }
 
-function wpbc_enqueue_block_editor_assets()
-{
-  /**
-   * PHPで生成した値をJavaScriptに渡す
-   *
-   * 第1引数: 渡したいJavaScriptの名前（wp_enqueue_scriptの第1引数に書いたもの）
-   * 第2引数: JavaScript内でのオブジェクト名
-   * 第3引数: 渡したい値の配列
-   */
-  wp_localize_script('su-blogcard-editor-script', 'wpbcAjaxValues', [
-    'api' => admin_url('admin-ajax.php'),
-    'action' => 'wpbc-action',
-    'nonce' => wp_create_nonce('wpbc-ajax'),
-    'actionRemoveCache' => 'wpbc-action-remove-cache', // cache削除用
-    'nonceRemoveCache' => wp_create_nonce('wpbc-ajax-remove-cache') // cache削除用
-
-  ]);
+function wpbc_enqueue_block_editor_assets() {
+	/**
+	 * PHPで生成した値をJavaScriptに渡す
+	 *
+	 * 第1引数: 渡したいJavaScriptの名前（wp_enqueue_scriptの第1引数に書いたもの）
+	 * 第2引数: JavaScript内でのオブジェクト名
+	 * 第3引数: 渡したい値の配列
+	 */
+	wp_localize_script('su-blogcard-editor-script', 'HUMIBLOGCARD', [
+		'api' => admin_url('admin-ajax.php'),
+		'action' => 'wpbc-action',
+		'nonce' => wp_create_nonce('wpbc-ajax'),
+		'actionRemoveCache' => 'wpbc-action-remove-cache', // cache削除用
+		'nonceRemoveCache' => wp_create_nonce('wpbc-ajax-remove-cache'), // cache削除用
+	]);
 }
 add_action('enqueue_block_editor_assets', 'wpbc_enqueue_block_editor_assets');
-
 
 /**
  * Ajaxで返すもの
  */
-function wpbc_ajax()
-{
-  if (wp_verify_nonce($_POST['nonce'], 'wpbc-ajax')) {
+function wpbc_ajax() {
+	if (wp_verify_nonce($_POST['nonce'], 'wpbc-ajax')) {
+		// キャッシュ機能を有効にするには第2引数をtrue
+		$json = wpbc_json($_POST, true);
+		echo $json;
 
-    // キャッシュ機能を有効にするには第2引数をtrue
-    $json = wpbc_json($_POST, true);
-    echo $json;
-
-    die();
-  }
+		die();
+	}
 }
 add_action('wp_ajax_wpbc-action', 'wpbc_ajax');
 
-function wpbc_ajax_remove_cache()
-{
-  if (wp_verify_nonce($_POST['nonce'], 'wpbc-ajax-remove-cache')) {
+function wpbc_ajax_remove_cache() {
+	if (wp_verify_nonce($_POST['nonce'], 'wpbc-ajax-remove-cache')) {
+		$transient_name = wpbc_transient_name($_POST['url']);
+		echo delete_transient($transient_name);
 
-    $transient_name = wpbc_transient_name($_POST['url']);
-    echo (delete_transient($transient_name));
-
-    die();
-  }
+		die();
+	}
 }
 add_action('wp_ajax_wpbc-action-remove-cache', 'wpbc_ajax_remove_cache');
 
@@ -110,7 +97,6 @@ add_action('wp_ajax_wpbc-action-remove-cache', 'wpbc_ajax_remove_cache');
  * wp-optionsに保存するcacheにつけるoption_name
  * @param string $url
  */
-function wpbc_transient_name($url)
-{
-  return 'wpbc--' . rawurlencode($url);
+function wpbc_transient_name($url) {
+	return 'wpbc--' . rawurlencode($url);
 }
