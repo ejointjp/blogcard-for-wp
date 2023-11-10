@@ -9,10 +9,10 @@ export default function Result({ attributes }) {
 	const domain = getDomainFromUrl(url);
 
 	return (
-		<div className="wp-blogcard">
-			<div className="wp-blogcard-item">
+		<div className="humibbc">
+			<div className="humibbc-item">
 				{!thumbnail && (
-					<figure className="wp-blogcard-figure">
+					<figure className="humibbc-figure">
 						{thumbnailUrl ? (
 							<img src={thumbnailUrl} alt="" aria-hidden="true" />
 						) : (
@@ -20,28 +20,23 @@ export default function Result({ attributes }) {
 						)}
 					</figure>
 				)}
-				<div className="wp-blogcard-content">
-					{displayTitle && <div className="wp-blogcard-title">{he.decode(displayTitle)}</div>}
+				<div className="humibbc-content">
+					{displayTitle && <div className="humibbc-title">{he.decode(displayTitle)}</div>}
 					{displayDescription && (
-						<div className="wp-blogcard-description">{he.decode(displayDescription)}</div>
+						<div className="humibbc-description">{he.decode(displayDescription)}</div>
 					)}
-					<div className="wp-blogcard-cite">
+					<div className="humibbc-cite">
 						{json.hasFavicon === 200 && (
-							<img
-								className="wp-blogcard-favicon"
-								src={faviconUrl(url)}
-								alt=""
-								aria-hidden="true"
-							/>
+							<img className="humibbc-favicon" src={faviconUrl(url)} alt="" aria-hidden="true" />
 						)}
-						<div className="wp-blogcard-domain">{domain}</div>
+						<div className="humibbc-domain">{domain}</div>
 					</div>
 				</div>
 			</div>
-			<div className="wp-block-humi-blogcard-editor-footer">
-				<button className="wp-block-humi-blogcard-editor-link components-button is-secondary button-small">
+			<div className="humibbc-footer">
+				<button className="humibbc-link components-button is-secondary">
 					<a href={url} target="blank noopener noreferrer">
-						リンクを表示
+						リンク先を表示
 					</a>
 				</button>
 			</div>

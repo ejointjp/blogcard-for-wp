@@ -7,7 +7,7 @@ export default function Display({ attributes }) {
 	const { state } = useContext(SharedContext);
 
 	const InfoText = (props) => {
-		return <div className="text-sm text-gray-600 mt-2">{props.children}</div>;
+		return <div className="humibbc-message">{props.children}</div>;
 	};
 
 	switch (state) {
@@ -19,7 +19,13 @@ export default function Display({ attributes }) {
 
 		case 'search':
 			return (
-				<ReactLoading class="mt-2" type="spin" color="rgb(253 210 59)" width="20px" height="20px" />
+				<ReactLoading
+					class="humibbc-loading"
+					type="spin"
+					color="rgb(253 210 59)"
+					width="20px"
+					height="20px"
+				/>
 			);
 
 		case 'data-success':

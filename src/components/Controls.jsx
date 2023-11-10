@@ -1,4 +1,4 @@
-import { useState, useEffect } from "@wordpress/element";
+import { useState, useEffect } from '@wordpress/element';
 
 import {
 	BaseControl,
@@ -7,15 +7,11 @@ import {
 	SelectControl,
 	TextControl,
 	ToggleControl,
-} from "@wordpress/components";
-import {
-	InspectorControls,
-	MediaUpload,
-	MediaUploadCheck,
-} from "@wordpress/block-editor";
+} from '@wordpress/components';
+import { InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 
 export default function Controls({ attributes, setAttributes }) {
-	const ALLOWED_MEDIA_TYPES = ["image"];
+	const ALLOWED_MEDIA_TYPES = ['image'];
 	const api = HUMIBLOGCARD.api;
 
 	const {
@@ -34,39 +30,39 @@ export default function Controls({ attributes, setAttributes }) {
 		thumbnailUrl,
 	} = attributes;
 
-	const [clearText, setClearText] = useState(""); // キャッシュをクリアしたときのメッセージ
+	const [clearText, setClearText] = useState(''); // キャッシュをクリアしたときのメッセージ
 
 	const removeCache = async () => {
 		const params = new URLSearchParams();
-		params.append("action", HUMIBLOGCARD.actionRemoveCache);
-		params.append("nonce", HUMIBLOGCARD.nonceRemoveCache);
-		params.append("url", url);
+		params.append('action', HUMIBLOGCARD.actionRemoveCache);
+		params.append('nonce', HUMIBLOGCARD.nonceRemoveCache);
+		params.append('url', url);
 
-		const res = await fetch(api, { method: "post", body: params });
+		const res = await fetch(api, { method: 'post', body: params });
 		const getText = await res.text();
 		// cacheクリアが完了したら
-		if (getText === "1") setClearText("キャッシュを削除しました");
+		if (getText === '1') setClearText('キャッシュを削除しました');
 	};
 
 	useEffect(() => {
-		if (target !== "") setAttributes({ noopener: true });
+		if (target !== '') setAttributes({ noopener: true });
 	}, [target]);
 
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={"ブロック設定"}
-				className="su-components-panel__body su-components-panel__body--wp-blogcard"
+				title={'ブロック設定'}
+				className="su-components-panel__body su-components-panel__body--humibbc"
 			>
 				<SelectControl
 					label="target属性"
 					value={target}
 					onChange={(value) => setAttributes({ target: value })}
 					options={[
-						{ value: "", label: "なし" },
-						{ value: "_blank", label: "_blank (別ウインドウ・タブ)" },
-						{ value: "_new", label: "_new (ひとつの別ウインドウ・タブ)" },
-						{ value: "_self", label: "_self (同じウインドウ・タブ)" },
+						{ value: '', label: 'なし' },
+						{ value: '_blank', label: '_blank (別ウインドウ・タブ)' },
+						{ value: '_new', label: '_new (ひとつの別ウインドウ・タブ)' },
+						{ value: '_self', label: '_self (同じウインドウ・タブ)' },
 					]}
 				/>
 
@@ -80,10 +76,8 @@ export default function Controls({ attributes, setAttributes }) {
 					label="noopener を追加"
 					help="target属性があれば強制的に有効になります"
 					checked={noopener}
-					disabled={target !== ""}
-					onChange={(value) =>
-						setAttributes({ noopener: target === "" ? value : true })
-					}
+					disabled={target !== ''}
+					onChange={(value) => setAttributes({ noopener: target === '' ? value : true })}
 				/>
 				<ToggleControl
 					label="rel=nofollow を追加"
@@ -121,10 +115,7 @@ export default function Controls({ attributes, setAttributes }) {
 
 				<BaseControl label="キャッシュを削除">
 					<div className="cached-btn">
-						<Button
-							className="components-button is-secondary"
-							onClick={removeCache}
-						>
+						<Button className="components-button is-secondary" onClick={removeCache}>
 							キャッシュを削除
 						</Button>
 						{json.cached && <span>Cached</span>}
@@ -156,10 +147,7 @@ export default function Controls({ attributes, setAttributes }) {
 							allowedTypes={ALLOWED_MEDIA_TYPES}
 							value={thumbnailUrl}
 							render={({ open }) => (
-								<Button
-									onClick={open}
-									className="editor-post-featured-image__toggle"
-								>
+								<Button onClick={open} className="editor-post-featured-image__toggle">
 									メディアライブラリを開く
 								</Button>
 							)}

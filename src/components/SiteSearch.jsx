@@ -25,7 +25,6 @@ export default function SiteSearch({ attributes, setAttributes }) {
 	};
 
 	const fetchData = async (url) => {
-		console.log('fetchされました');
 		const params = new URLSearchParams();
 		params.append('action', HUMIBLOGCARD.action);
 		params.append('nonce', HUMIBLOGCARD.nonce);
@@ -51,12 +50,6 @@ export default function SiteSearch({ attributes, setAttributes }) {
 	const isDataEmpty = !Object.keys(json).length;
 	// 返却されたデータが無効（URLが見つからなかった）
 	// const isDataError = json.status === 'error'
-
-	const changeState = () => {
-		if (!isDataEmpty) {
-			setState('data-success');
-		}
-	};
 
 	const isExternalLink = (url) => {
 		const reg = new RegExp('^(https?:)?//' + location.hostname);
@@ -135,40 +128,26 @@ export default function SiteSearch({ attributes, setAttributes }) {
 		};
 	}, [searchQuery]);
 
-	// // URLが有効ならfetch
-	// useEffect(() => {
-	// 	if (isValidUrl(url)) {
-	// 		fetchData();
-	// 	} else {
-	// 		setAttributes({ json: {} });
-	// 	}
-	// }, [url]);
-
 	// jsonに変更があったらstateを変更する
 	useEffect(() => {
-		changeState();
+		if (!isDataEmpty) {
+			setState('data-success');
+		}
 	}, [json]);
 
-	// useEffectを使ってクリックイベントリスナーを設定
-	useEffect(() => {
-		document.addEventListener('click', handleOutsideClick);
-		return () => {
-			document.removeEventListener('click', handleOutsideClick);
-		};
-	}, []);
-
 	return (
-		<div className="wp-block-humi-blogcard-editor-site-search">
+		<div className="humibbc-search">
 			<SearchControl
-				className="search-component"
+				className="humibbc-search-bar"
 				label="検索"
 				placeholder="URLを入力してEnter / サイト内検索の場合はキーワードを入力"
 				value={searchQuery}
 				onChange={(value) => setSearchQuery(value)}
 				onKeyDown={handleKeyDown}
+				// onBlur={() => setShowPopover(false)} // フォーカスが外れたときにshowPopoverをfalseにする
 			/>
 			{showPopover && !isValidUrl(searchQuery) && (
-				<div className="wp-block-humi-blogcard-editor-site-search-results">
+				<div className="humibbc-search-results">
 					<ul className="">
 						{searchResults.map((post) => (
 							<li key={post.id} value={post} onClick={() => handleClickResult(post)}>

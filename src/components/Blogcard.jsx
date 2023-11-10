@@ -4,7 +4,7 @@ import Controls from './Controls';
 import Display from './Display';
 
 export default function Blogcard({ props }) {
-	const blockProps = useBlockProps({ className: 'wp-block-humi-blogcard-editor' });
+	const blockProps = useBlockProps();
 	const { attributes, setAttributes } = props;
 
 	return (

@@ -1,6 +1,6 @@
-import he from "he";
-import Thumbnail from "./components/Thumbnail";
-import { getDomainFromUrl, faviconUrl } from "./util";
+import he from 'he';
+import Thumbnail from './components/Thumbnail';
+import { getDomainFromUrl, faviconUrl } from './util';
 const { useBlockProps } = wp.blockEditor;
 
 export default function save(props) {
@@ -24,12 +24,12 @@ export default function save(props) {
 	} = props;
 
 	const rels = [];
-	if (noopener) rels.push("noopener");
-	if (nofollow) rels.push("nofollow");
-	if (noreferrer) rels.push("noreferrer");
-	if (external) rels.push("external");
-	if (sponsored) rels.push("sponsored");
-	if (ugc) rels.push("ugc");
+	if (noopener) rels.push('noopener');
+	if (nofollow) rels.push('nofollow');
+	if (noreferrer) rels.push('noreferrer');
+	if (external) rels.push('external');
+	if (sponsored) rels.push('sponsored');
+	if (ugc) rels.push('ugc');
 
 	const domain = getDomainFromUrl(url);
 	// データがない
@@ -42,15 +42,15 @@ export default function save(props) {
 		<>
 			{!isDataEmpty && (
 				<div {...blockProps}>
-					<blockquote className="wp-blogcard" cite={url}>
+					<blockquote className="humibbc" cite={url}>
 						<a
-							className="wp-blogcard-item"
+							className="humibbc-item"
 							href={url}
-							target={target !== "" ? target : null}
-							rel={rels.join(" ")}
+							target={target !== '' ? target : null}
+							rel={rels.join(' ')}
 						>
 							{!thumbnail && (
-								<figure className="wp-blogcard-figure">
+								<figure className="humibbc-figure">
 									{thumbnailUrl ? (
 										<img src={thumbnailUrl} alt="" aria-hidden="true" />
 									) : (
@@ -58,27 +58,21 @@ export default function save(props) {
 									)}
 								</figure>
 							)}
-							<div className="wp-blogcard-content">
-								{displayTitle && (
-									<div className="wp-blogcard-title">
-										{he.decode(displayTitle)}
-									</div>
-								)}
+							<div className="humibbc-content">
+								{displayTitle && <div className="humibbc-title">{he.decode(displayTitle)}</div>}
 								{displayDescription && (
-									<div className="wp-blogcard-description">
-										{he.decode(displayDescription)}
-									</div>
+									<div className="humibbc-description">{he.decode(displayDescription)}</div>
 								)}
-								<div className="wp-blogcard-cite">
+								<div className="humibbc-cite">
 									{json.hasFavicon === 200 && (
 										<img
-											className="wp-blogcard-favicon"
+											className="humibbc-favicon"
 											src={faviconUrl(url)}
 											alt=""
 											aria-hidden="true"
 										/>
 									)}
-									<div className="wp-blogcard-domain">{domain}</div>
+									<div className="humibbc-domain">{domain}</div>
 								</div>
 							</div>
 						</a>
