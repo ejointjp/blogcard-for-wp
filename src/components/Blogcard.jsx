@@ -1,5 +1,4 @@
 import { PlainText, useBlockProps } from '@wordpress/block-editor';
-import { useEffect } from '@wordpress/element';
 import { useContext } from '@wordpress/element';
 import { SharedContext } from '../libs/contextProvider';
 import ReactLoading from 'react-loading';
@@ -7,64 +6,12 @@ import ReactLoading from 'react-loading';
 import SiteSearch from './SiteSearch';
 import Controls from './Controls';
 import Result from './Result';
-import { isValidUrl } from '../util';
 
 export default function Blogcard({ props }) {
-	const api = HUMIBLOGCARD.api;
 	const blockProps = useBlockProps({ className: 'wp-blogcard-editor' });
 	const { attributes, setAttributes } = props;
-	const { url, json } = attributes;
-	const { postId, state, setState } = useContext(SharedContext);
 
-	const fetchData = async () => {
-		const params = new URLSearchParams();
-		params.append('action', HUMIBLOGCARD.action);
-		params.append('nonce', HUMIBLOGCARD.nonce);
-		params.append('url', url);
-		if (postId) params.append('postId', postId);
-
-		try {
-			const res = await fetch(api, { method: 'post', body: params });
-			const getJson = await res.json();
-
-			// jsonが空だったら（初回は）デフォルト値を設定
-			if (!Object.keys(json).length) {
-				await setDefault();
-			}
-			await setAttributes({ json: getJson });
-		} catch (e) {
-			setState('fetch-error');
-			console.error(e);
-		}
-	};
-
-	const changeState = () => {
-		if (!isDataEmpty) {
-			setState('data-success');
-		}
-	};
-
-	const isExternalLink = (url) => {
-		const reg = new RegExp('^(https?:)?//' + location.hostname);
-
-		return !(url.match(reg) || url.charAt(0) === '/');
-	};
-
-	// URLが入力されたときの初期設定
-	const setDefault = () => {
-		if (isExternalLink(url)) {
-			setAttributes({
-				nofollow: true,
-				noreferrer: true,
-				external: true,
-			});
-		}
-	};
-
-	// データがない
-	const isDataEmpty = !Object.keys(json).length;
-	// 返却されたデータが無効（URLが見つからなかった）
-	// const isDataError = json.status === 'error'
+	const { state } = useContext(SharedContext);
 
 	const InfoText = (props) => {
 		return <div className="text-sm text-gray-600 mt-2">{props.children}</div>;
@@ -104,20 +51,6 @@ export default function Blogcard({ props }) {
 				return '';
 		}
 	};
-
-	// URLが有効ならfetch
-	useEffect(() => {
-		if (isValidUrl(url)) {
-			fetchData();
-		} else {
-			setAttributes({ json: {} });
-		}
-	}, [url]);
-
-	// jsonに変更があったらstateを変更する
-	useEffect(() => {
-		changeState();
-	}, [json]);
 
 	return (
 		<>

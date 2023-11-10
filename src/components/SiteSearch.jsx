@@ -5,11 +5,12 @@ import { isValidUrl } from '../util';
 import { SharedContext } from '../libs/contextProvider';
 import { useContext } from '@wordpress/element';
 
-const SiteSearch = ({ attributes, setAttributes }) => {
-	const { url } = attributes;
+export default function SiteSearch({ attributes, setAttributes }) {
+	const api = HUMIBLOGCARD.api;
+	const { url, json } = attributes;
 	const [searchResults, setSearchResults] = useState([]);
 	const [showPopover, setShowPopover] = useState(false);
-	const { setPostId, searchQuery, setSearchQuery, setState } = useContext(SharedContext);
+	const { postId, setPostId, searchQuery, setSearchQuery, setState } = useContext(SharedContext);
 
 	// 非同期検索関数
 	const performSearch = (query) => {
@@ -22,6 +23,57 @@ const SiteSearch = ({ attributes, setAttributes }) => {
 			.catch((error) => {
 				console.error('エラーが発生しました:', error);
 			});
+	};
+
+	const fetchData = async () => {
+		console.log('fetchされました');
+		const params = new URLSearchParams();
+		params.append('action', HUMIBLOGCARD.action);
+		params.append('nonce', HUMIBLOGCARD.nonce);
+		params.append('url', url);
+		if (postId) params.append('postId', postId);
+
+		try {
+			const res = await fetch(api, { method: 'post', body: params });
+			const getJson = await res.json();
+
+			// jsonが空だったら（初回は）デフォルト値を設定
+			if (!Object.keys(json).length) {
+				await setDefault();
+			}
+			await setAttributes({ json: getJson });
+		} catch (e) {
+			setState('fetch-error');
+			console.error(e);
+		}
+	};
+
+	// データがない
+	const isDataEmpty = !Object.keys(json).length;
+	// 返却されたデータが無効（URLが見つからなかった）
+	// const isDataError = json.status === 'error'
+
+	const changeState = () => {
+		if (!isDataEmpty) {
+			setState('data-success');
+		}
+	};
+
+	const isExternalLink = (url) => {
+		const reg = new RegExp('^(https?:)?//' + location.hostname);
+
+		return !(url.match(reg) || url.charAt(0) === '/');
+	};
+
+	// URLが入力されたときの初期設定
+	const setDefault = () => {
+		if (isExternalLink(url)) {
+			setAttributes({
+				nofollow: true,
+				noreferrer: true,
+				external: true,
+			});
+		}
 	};
 
 	// デバウンスされた検索関数
@@ -82,6 +134,20 @@ const SiteSearch = ({ attributes, setAttributes }) => {
 		};
 	}, [searchQuery]);
 
+	// URLが有効ならfetch
+	useEffect(() => {
+		if (isValidUrl(url)) {
+			fetchData();
+		} else {
+			setAttributes({ json: {} });
+		}
+	}, [url]);
+
+	// jsonに変更があったらstateを変更する
+	useEffect(() => {
+		changeState();
+	}, [json]);
+
 	// useEffectを使ってクリックイベントリスナーを設定
 	useEffect(() => {
 		document.addEventListener('click', handleOutsideClick);
@@ -90,35 +156,21 @@ const SiteSearch = ({ attributes, setAttributes }) => {
 		};
 	}, []);
 
-	console.log('searchQuery', searchQuery);
-	console.log('url', url);
-
 	return (
 		<>
 			<SearchControl
+				className="search-component"
 				label="検索"
+				placeholder="URLを入力してEnter / サイト内検索の場合はキーワードを入力"
 				value={searchQuery}
 				onChange={(value) => setSearchQuery(value)}
 				onKeyDown={handleKeyDown}
-				className="search-component"
-				placeholder="URLを入力してEnter / サイト内検索の場合はキーワードを入力"
 			/>
 			{showPopover && !isValidUrl(searchQuery) && (
 				<div className="wp-blogcard-editor-site-search-results">
 					<ul className="">
 						{searchResults.map((post) => (
-							<li
-								key={post.id}
-								// onClick={() => {
-								// 	onClick(post);
-								// 	setShowPopover(false);
-								// }}
-								value={post}
-								onClick={() => handleClickResult(post)}
-							>
-								{/* <a href={post.link} target="_blank" rel="noopener noreferrer">
-								{post.title.rendered}
-							</a> */}
+							<li key={post.id} value={post} onClick={() => handleClickResult(post)}>
 								{post.title.rendered}
 							</li>
 						))}
@@ -127,6 +179,4 @@ const SiteSearch = ({ attributes, setAttributes }) => {
 			)}
 		</>
 	);
-};
-
-export default SiteSearch;
+}

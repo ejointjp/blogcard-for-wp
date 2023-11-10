@@ -1,1 +1,90 @@
-.wp-block-su-blogcard{position:relative;z-index:99999}.wp-blogcard-editor-site-search{display:none}.is-selected .wp-blogcard-editor-site-search{display:block}.wp-blogcard-editor-site-search-results{position:relative;z-index:99999;& ul{background-color:#fff;border:1px solid var(--humi-blogcard-border-base);border-radius:.25rem;font-size:.875rem;left:0;list-style:none;margin:0;padding:0;position:absolute;right:0;top:0;z-index:99999}& li{cursor:pointer;padding:.75rem 1rem;&:hover{background-color:var(--humi-blogcard-bg-base)}}}.wp-blogcard-editor-input{border-radius:.375rem;padding:.5rem}.wp-blogcard-editor-link{display:none;.is-selected &{display:block}& a{text-decoration:none}}.wp-blogcard-editor-footer{display:flex;justify-content:flex-end;margin-top:.5rem}.wp-blogcard-item{margin-top:.5rem}.cached-btn{align-items:center;display:flex;font-size:.625rem;gap:.5rem}
+/*!********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/editor.css ***!
+  \********************************************************************************************************************************************************************/
+/* For Editor */
+
+/* .wp-blogcard-editor {
+	padding: 1rem;
+	background-color: var(--su-zinc-100, #f4f4f5);
+	border-radius: 0.5rem;
+} */
+
+.wp-block-su-blogcard {
+	position: relative;
+	z-index: 99999;
+}
+
+.wp-blogcard-editor-site-search {
+	display: none;
+}
+
+.is-selected .wp-blogcard-editor-site-search {
+	display: block;
+}
+
+.wp-blogcard-editor-site-search-results {
+	position: relative;
+	z-index: 99999;
+
+	& ul {
+		z-index: 99999;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border-radius: 0.25rem;
+
+		position: absolute;
+		right: 0;
+		left: 0;
+		top: 0;
+		background-color: white;
+		border: 1px solid var(--humi-blogcard-border-base);
+		font-size: 0.875rem;
+	}
+
+	& li {
+		padding: 0.75rem 1rem;
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--humi-blogcard-bg-base);
+		}
+	}
+}
+
+.wp-blogcard-editor-input {
+	padding: 0.5rem;
+	border-radius: 0.375rem;
+}
+
+.wp-blogcard-editor-link {
+	display: none;
+
+	.is-selected & {
+		display: block;
+	}
+
+	& a {
+		text-decoration: none;
+	}
+}
+
+.wp-blogcard-editor-footer {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 0.5rem;
+}
+
+.wp-blogcard-item {
+	margin-top: 0.5rem;
+}
+
+.cached-btn {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	font-size: 0.625rem;
+}
+
+
+/*# sourceMappingURL=index.css.map*/
