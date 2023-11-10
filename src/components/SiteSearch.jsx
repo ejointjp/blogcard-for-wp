@@ -24,7 +24,7 @@ export default function SiteSearch({ attributes, setAttributes }) {
 			});
 	};
 
-	const fetchData = async () => {
+	const fetchData = async (url) => {
 		console.log('fetchされました');
 		const params = new URLSearchParams();
 		params.append('action', HUMIBLOGCARD.action);
@@ -109,6 +109,7 @@ export default function SiteSearch({ attributes, setAttributes }) {
 			// URLの形式ならURLを登録する（検索がはじまる）
 			if (isValidUrl(searchQuery)) {
 				setAttributes({ url: searchQuery });
+				fetchData(searchQuery);
 				// 検索モード
 				setState('search');
 			}
@@ -120,6 +121,7 @@ export default function SiteSearch({ attributes, setAttributes }) {
 		setAttributes({ url: value.link });
 		setPostId(value.id);
 		setSearchQuery(value.link);
+		fetchData(value.link);
 		setState('search');
 		setShowPopover(false);
 	};
@@ -133,14 +135,14 @@ export default function SiteSearch({ attributes, setAttributes }) {
 		};
 	}, [searchQuery]);
 
-	// URLが有効ならfetch
-	useEffect(() => {
-		if (isValidUrl(url)) {
-			fetchData();
-		} else {
-			setAttributes({ json: {} });
-		}
-	}, [url]);
+	// // URLが有効ならfetch
+	// useEffect(() => {
+	// 	if (isValidUrl(url)) {
+	// 		fetchData();
+	// 	} else {
+	// 		setAttributes({ json: {} });
+	// 	}
+	// }, [url]);
 
 	// jsonに変更があったらstateを変更する
 	useEffect(() => {
