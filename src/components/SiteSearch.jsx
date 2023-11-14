@@ -170,27 +170,33 @@ export default function SiteSearch({ attributes, setAttributes }) {
 			/>
 			{showPopover && !isValidUrl(searchQuery) && (
 				<div className="humibbc-search-results">
-					<div className="humibbc-search-results-item">
-						<p>投稿</p>
-						<ul className="">
-							{searchResults.map((post) => (
-								<li key={post.id} value={post} onClick={() => handleClickResult(post)}>
-									{post.title.rendered}
-								</li>
-							))}
-						</ul>
-					</div>
+					{searchResults.length > 0 && (
+						<div className="humibbc-search-results-item">
+							<p>投稿</p>
+							<ul>
+								{searchResults.map((post) => (
+									<li key={post.id} onClick={() => handleClickResult(post)}>
+										<span className="humibbc-search-results-title">{post.title.rendered}</span>
+										<span className="humibbc-search-results-url">{post.link}</span>
+									</li>
+								))}
+							</ul>
+						</div>
+					)}
 
-					<div className="humibbc-search-results-item">
-						<p>固定ページ</p>
-						<ul className="">
-							{searchPageResults.map((post) => (
-								<li key={post.id} value={post} onClick={() => handleClickResult(post)}>
-									{post.title.rendered}
-								</li>
-							))}
-						</ul>
-					</div>
+					{searchPageResults.length > 0 && (
+						<div className="humibbc-search-results-item">
+							<p>固定ページ</p>
+							<ul className="">
+								{searchPageResults.map((post) => (
+									<li key={post.id} onClick={() => handleClickResult(post)}>
+										<span className="humibbc-search-results-title">{post.title.rendered}</span>
+										<span className="humibbc-search-results-url">{post.link}</span>
+									</li>
+								))}
+							</ul>
+						</div>
+					)}
 				</div>
 			)}
 		</div>

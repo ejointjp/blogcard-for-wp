@@ -1,1 +1,109 @@
-body{--humib-bg-base:#f1f1f7;--humib-text-base:#222227;--humib-text-light:#5b5b62;--humib-border-base:#e4e4e8}.wp-block-humi-blogcard{container-type:inline-size}.humibbc{margin:0}.humibbc-item{background-color:#fff;border:2px solid var(--humib-border-base);border-radius:.5rem;color:var(--humib-text-base);display:flex;flex-direction:row-reverse;gap:1.5rem;line-height:1.5;overflow:hidden;padding:1em;&:hover{text-decoration:none}}.humibbc-figure{flex-shrink:0;margin-bottom:0;&>img{aspect-ratio:1/1;border-radius:.25rem;-o-object-fit:cover;object-fit:cover;width:4rem}}.humibbc-content{display:grid;flex-grow:1;gap:.5rem}.humibbc-message{color:var(--humib-text-light);font-size:.875rem;margin-top:.25rem}.humibbc-title{font-weight:700}.humibbc-description{-webkit-box-orient:vertical;-webkit-line-clamp:2;color:var(--humib-text-light);display:-webkit-box;font-size:.75rem;overflow:hidden}.humibbc-cite{align-items:center;display:flex;gap:.375rem;margin-top:.5rem}.humibbc-favicon{border-radius:.125rem}.humibbc-domain{color:var(--humib-text-light);font-size:.75rem;font-style:italic;&:hover{color:var(--humi-text-light)}}@container (768px <= width){.humibbc-item{padding:1.5rem}.humibbc-figure>img{width:5rem}}
+/*!*******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/style.css ***!
+  \*******************************************************************************************************************************************************************/
+body {
+	--humib-bg-base: #f1f1f7;
+	--humib-text-base: #222227;
+	--humib-text-light: #5b5b62;
+	--humib-border-base: #e4e4e8;
+}
+
+.wp-block-humi-blogcard {
+	container-type: inline-size;
+}
+
+.humibbc {
+	margin: 0;
+}
+
+.humibbc-item {
+	padding: 1em;
+	display: flex;
+	flex-direction: row-reverse;
+	overflow: hidden;
+	line-height: 1.5;
+	background-color: white;
+	border: 2px solid var(--humib-border-base);
+	border-radius: 0.5rem;
+	color: var(--humib-text-base);
+
+	gap: 1.5rem;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.humibbc-figure {
+	flex-shrink: 0;
+	margin-bottom: 0;
+
+	& > img {
+		-o-object-fit: cover;
+		   object-fit: cover;
+		width: 4rem;
+		aspect-ratio: 1 / 1;
+		border-radius: 0.25rem;
+	}
+}
+
+.humibbc-content {
+	flex-grow: 1;
+	display: grid;
+	gap: 0.5rem;
+}
+
+.humibbc-message {
+	font-size: 0.875rem;
+	color: var(--humib-text-light);
+	margin-top: 0.25rem;
+}
+
+.humibbc-title {
+	font-weight: 700;
+}
+
+.humibbc-description {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+
+	font-size: 0.75rem;
+	color: var(--humib-text-light);
+}
+
+.humibbc-cite {
+	display: flex;
+	gap: 0.375rem;
+	align-items: center;
+	margin-top: 0.5rem;
+}
+
+.humibbc-favicon {
+	border-radius: 0.125rem;
+}
+
+.humibbc-domain {
+	font-size: 0.75rem;
+	font-style: italic;
+	color: var(--humib-text-light);
+
+	&:hover {
+		color: var(--humi-text-light);
+	}
+}
+
+@container (768px <= width) {
+	.humibbc-item {
+		padding: 1.5rem;
+	}
+
+	.humibbc-figure > img {
+		width: 5rem;
+	}
+}
+
+
+/*# sourceMappingURL=style-index.css.map*/
