@@ -5,7 +5,7 @@ import { isValidUrl } from '../util';
 import { SharedContext } from '../libs/contextProvider';
 
 export default function SiteSearch({ attributes, setAttributes }) {
-	const api = HUMIBLOGCARD.api;
+	const api = LITOBC.api;
 	const { url, json } = attributes;
 	const [searchResults, setSearchResults] = useState([]);
 	const [searchPageResults, setSearchPageResults] = useState([]);
@@ -54,8 +54,8 @@ export default function SiteSearch({ attributes, setAttributes }) {
 
 	const fetchData = async (url) => {
 		const params = new URLSearchParams();
-		params.append('action', HUMIBLOGCARD.action);
-		params.append('nonce', HUMIBLOGCARD.nonce);
+		params.append('action', LITOBC.action);
+		params.append('nonce', LITOBC.nonce);
 		params.append('url', url);
 		if (postId) params.append('postId', postId);
 
@@ -159,9 +159,9 @@ export default function SiteSearch({ attributes, setAttributes }) {
 	}, [json]);
 
 	return (
-		<div className="humibbc-search">
+		<div className="litobc-search">
 			<SearchControl
-				className="humibbc-search-bar"
+				className="litobc-search-bar"
 				label="検索"
 				placeholder="URLを入力してEnter / サイト内検索の場合はキーワードを入力"
 				value={searchQuery}
@@ -169,15 +169,15 @@ export default function SiteSearch({ attributes, setAttributes }) {
 				onKeyDown={handleKeyDown}
 			/>
 			{showPopover && !isValidUrl(searchQuery) && (
-				<div className="humibbc-search-results">
+				<div className="litobc-search-results">
 					{searchResults.length > 0 && (
-						<div className="humibbc-search-results-item">
+						<div className="litobc-search-results-item">
 							<p>投稿</p>
 							<ul>
 								{searchResults.map((post) => (
 									<li key={post.id} onClick={() => handleClickResult(post)}>
-										<span className="humibbc-search-results-title">{post.title.rendered}</span>
-										<span className="humibbc-search-results-url">{post.link}</span>
+										<span className="litobc-search-results-title">{post.title.rendered}</span>
+										<span className="litobc-search-results-url">{post.link}</span>
 									</li>
 								))}
 							</ul>
@@ -185,13 +185,13 @@ export default function SiteSearch({ attributes, setAttributes }) {
 					)}
 
 					{searchPageResults.length > 0 && (
-						<div className="humibbc-search-results-item">
+						<div className="litobc-search-results-item">
 							<p>固定ページ</p>
 							<ul className="">
 								{searchPageResults.map((post) => (
 									<li key={post.id} onClick={() => handleClickResult(post)}>
-										<span className="humibbc-search-results-title">{post.title.rendered}</span>
-										<span className="humibbc-search-results-url">{post.link}</span>
+										<span className="litobc-search-results-title">{post.title.rendered}</span>
+										<span className="litobc-search-results-url">{post.link}</span>
 									</li>
 								))}
 							</ul>

@@ -7,7 +7,7 @@ export default function Display({ attributes }) {
 	const { state } = useContext(SharedContext);
 
 	const InfoText = (props) => {
-		return <div className="humibbc-message">{props.children}</div>;
+		return <div className="litobc-message">{props.children}</div>;
 	};
 
 	switch (state) {
@@ -20,7 +20,7 @@ export default function Display({ attributes }) {
 		case 'search':
 			return (
 				<ReactLoading
-					class="humibbc-loading"
+					class="litobc-loading"
 					type="spin"
 					color="rgb(253 210 59)"
 					width="20px"

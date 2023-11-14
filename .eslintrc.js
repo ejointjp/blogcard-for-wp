@@ -14,6 +14,6 @@ module.exports = {
 		'no-unused-vars': 'warn',
 	},
 	globals: {
-		HUMIBLOGCARD: true,
+		LITOBC: true,
 	},
 };

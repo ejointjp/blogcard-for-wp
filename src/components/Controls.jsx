@@ -12,7 +12,7 @@ import { InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/blo
 
 export default function Controls({ attributes, setAttributes }) {
 	const ALLOWED_MEDIA_TYPES = ['image'];
-	const api = HUMIBLOGCARD.api;
+	const api = LITOBC.api;
 
 	const {
 		url,
@@ -34,8 +34,8 @@ export default function Controls({ attributes, setAttributes }) {
 
 	const removeCache = async () => {
 		const params = new URLSearchParams();
-		params.append('action', HUMIBLOGCARD.actionRemoveCache);
-		params.append('nonce', HUMIBLOGCARD.nonceRemoveCache);
+		params.append('action', LITOBC.actionRemoveCache);
+		params.append('nonce', LITOBC.nonceRemoveCache);
 		params.append('url', url);
 
 		const res = await fetch(api, { method: 'post', body: params });
@@ -52,7 +52,7 @@ export default function Controls({ attributes, setAttributes }) {
 		<InspectorControls>
 			<PanelBody
 				title={'ブロック設定'}
-				className="su-components-panel__body su-components-panel__body--humibbc"
+				className="su-components-panel__body su-components-panel__body--litobc"
 			>
 				<SelectControl
 					label="target属性"

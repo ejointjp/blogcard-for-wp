@@ -3,11 +3,11 @@
 /**
  * リンクのブログカードのコンテンツ部分
  */
-function humibbc_json($attr, $transient = true) {
+function litobc_json($attr, $transient = true) {
 	$post_id = $attr['postId'];
 
 	// データベースのwp-optionsに登録されるoption_name
-	$transient_name = humibbc_transient_name($attr['url']);
+	$transient_name = litobc_transient_name($attr['url']);
 
 	// リンクデータのcacheがある場合、cacheを返却
 	if ($transient === true) {
@@ -25,10 +25,10 @@ function humibbc_json($attr, $transient = true) {
 	$html = $results['body'];
 
 	// UTF-8に変換
-	$html = humibbc_convert_encoding($html);
+	$html = litobc_convert_encoding($html);
 
 	// すべてのOGPを取得
-	$og = humibbc_get_ogp($html);
+	$og = litobc_get_ogp($html);
 
 	/////////////////////////////////////////////////////
 
@@ -62,7 +62,7 @@ function humibbc_json($attr, $transient = true) {
 		$description = $meta_tags['description'] ? $meta_tags['description'] : $og['description'];
 
 		// UTF-8に変換
-		$description = humibbc_convert_encoding($description);
+		$description = litobc_convert_encoding($description);
 		$description =
 			mb_strlen($description) > 100 ? mb_substr($description, 0, 100) . '...' : $description;
 	}
@@ -80,7 +80,7 @@ function humibbc_json($attr, $transient = true) {
 	if ($post_id && has_post_thumbnail($post_id)) {
 		// 自サイトの場合はアイキャッチを表示
 		$thumbnail = get_the_post_thumbnail_url($post_id, 'medium_large');
-	} elseif (isset($og['image']) && humibbc_url_exists($og['image'])) {
+	} elseif (isset($og['image']) && litobc_url_exists($og['image'])) {
 		// og:image がある場合は表示
 		$thumbnail = $og['image'];
 	}
@@ -91,7 +91,7 @@ function humibbc_json($attr, $transient = true) {
 
 	/////////////////////////////////////////////////////
 
-	$has_favicon = humibbc_url_exists(
+	$has_favicon = litobc_url_exists(
 		'https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=' .
 			$attr['url'] .
 			'&size=16'
@@ -103,7 +103,7 @@ function humibbc_json($attr, $transient = true) {
 
 	/////////////////////////////////////////////////////
 
-	if (humibbc_url_exists($attr['url']) !== false) {
+	if (litobc_url_exists($attr['url']) !== false) {
 		// URLが存在する場合
 		$return_arr = [
 			'title' => $title,
@@ -132,8 +132,8 @@ function humibbc_json($attr, $transient = true) {
 /**
  * URLが存在するかチェック
  */
-function humibbc_url_exists($url) {
-	$headers = @humibbc_get_headers($url);
+function litobc_url_exists($url) {
+	$headers = @litobc_get_headers($url);
 
 	if ($headers) {
 		return $headers['last-status'];
@@ -145,7 +145,7 @@ function humibbc_url_exists($url) {
  *
  * http://exe.tyo.ro/2010/04/phpget_headers.html
  */
-function humibbc_get_headers($url) {
+function litobc_get_headers($url) {
 	$headers = get_headers($url);
 	if (!$headers) {
 		return $headers;
@@ -169,7 +169,7 @@ function humibbc_get_headers($url) {
 /**
  * すべてのOGPを取得
  */
-function humibbc_get_ogp($html) {
+function litobc_get_ogp($html) {
 	preg_match_all('<meta property=\"og:([^\"]+)\" content=\"([^\"]+)\">', $html, $ogp);
 	for ($i = 0; $i < count($ogp[1]); $i++) {
 		$og[$ogp[1][$i]] = $ogp[2][$i];
@@ -181,7 +181,7 @@ function humibbc_get_ogp($html) {
  * 文字コードをUTF-8に変換
  */
 
-function humibbc_convert_encoding($string) {
+function litobc_convert_encoding($string) {
 	// 文字コードを調べる
 	$source_encode = mb_detect_encoding($string, ['UTF-8', 'SJIS-win', 'eucJP-win']);
 

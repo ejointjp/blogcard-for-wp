@@ -43,15 +43,15 @@ export default function save(props) {
 		<>
 			{!isDataEmpty && (
 				<div {...blockProps}>
-					<article className="humibbc" cite={url}>
+					<article className="litobc" cite={url}>
 						<a
-							className="humibbc-item"
+							className="litobc-item"
 							href={url}
 							target={target !== '' ? target : null}
 							rel={rels.join(' ')}
 						>
 							{!thumbnail && (
-								<figure className="humibbc-figure">
+								<figure className="litobc-figure">
 									{thumbnailUrl ? (
 										<img src={thumbnailUrl} alt="" aria-hidden="true" />
 									) : (
@@ -59,21 +59,21 @@ export default function save(props) {
 									)}
 								</figure>
 							)}
-							<div className="humibbc-content">
-								{displayTitle && <div className="humibbc-title">{he.decode(displayTitle)}</div>}
+							<div className="litobc-content">
+								{displayTitle && <div className="litobc-title">{he.decode(displayTitle)}</div>}
 								{displayDescription && (
-									<div className="humibbc-description">{he.decode(displayDescription)}</div>
+									<div className="litobc-description">{he.decode(displayDescription)}</div>
 								)}
-								<div className="humibbc-cite">
+								<div className="litobc-cite">
 									{json.hasFavicon === 200 && (
 										<img
-											className="humibbc-favicon"
+											className="litobc-favicon"
 											src={faviconUrl(url)}
 											alt=""
 											aria-hidden="true"
 										/>
 									)}
-									<div className="humibbc-domain">{domain}</div>
+									<div className="litobc-domain">{domain}</div>
 								</div>
 							</div>
 						</a>

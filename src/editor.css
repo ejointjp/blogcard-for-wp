@@ -1,41 +1,41 @@
 /* For Editor */
 
-.wp-block-humi-blogcard {
+.wp-block-lito-blogcard {
 	position: relative;
 	&.is-selected {
 		z-index: 9999;
 	}
 }
 
-.is-selected .humibbc-search {
+.is-selected .litobc-search {
 	display: block;
 }
 
-.humibbc-search {
+.litobc-search {
 	display: none;
 
-	&:not(:has(+ .humibbc)) {
+	&:not(:has(+ .litobc)) {
 		display: block;
 	}
 }
 
-.humibbc-search-results {
+.litobc-search-results {
 	position: relative;
 	box-shadow: 0 4px 8px -4px rgb(0 0 0 /20%);
 	border-radius: 0.25rem;
 	background-color: white;
-	border: 1px solid var(--humib-border-base);
+	border: 1px solid var(--litob-border-base);
 	max-height: 70svh;
 	overflow: scroll;
 }
 
-.humibbc-search-results-item {
+.litobc-search-results-item {
 	& > p {
 		margin: 0;
 		padding: 0.5rem 1rem;
-		color: var(--humib-text-light);
+		color: var(--litob-text-light);
 		font-size: 0.75rem;
-		border-bottom: 1px solid var(--humib-border-base);
+		border-bottom: 1px solid var(--litob-border-base);
 	}
 
 	& > ul {
@@ -49,36 +49,36 @@
 			display: grid;
 
 			&:hover {
-				background-color: var(--humib-bg-base);
+				background-color: var(--litob-bg-base);
 			}
 		}
 	}
 
-	& + .humibbc-search-results-item {
-		border-top: 1px solid var(--humib-border-base);
+	& + .litobc-search-results-item {
+		border-top: 1px solid var(--litob-border-base);
 	}
 }
 
-.humibbc-search-results-title {
+.litobc-search-results-title {
 	font-weight: 600;
 	font-size: 0.875rem;
 }
 
-.humibbc-search-results-url {
+.litobc-search-results-url {
 	font-size: 0.625rem;
-	color: var(--humib-text-light);
+	color: var(--litob-text-light);
 }
 
-.wp-block-humi-blogcard:not(.is-selected) .humibbc-search-results {
+.wp-block-lito-blogcard:not(.is-selected) .litobc-search-results {
 	display: none;
 }
 
-.humibbc-input {
+.litobc-input {
 	padding: 0.5rem;
 	border-radius: 0.375rem;
 }
 
-.humibbc-link {
+.litobc-link {
 	display: none;
 
 	.is-selected & {
@@ -95,13 +95,13 @@
 	}
 }
 
-.humibbc-footer {
+.litobc-footer {
 	display: flex;
 	justify-content: flex-end;
 	margin-top: 0.5rem;
 }
 
-.humibbc-item {
+.litobc-item {
 	margin-top: 0.5rem;
 }
 

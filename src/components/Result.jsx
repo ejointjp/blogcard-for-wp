@@ -9,10 +9,10 @@ export default function Result({ attributes }) {
 	const domain = getDomainFromUrl(url);
 
 	return (
-		<article className="humibbc">
-			<div className="humibbc-item">
+		<article className="litobc">
+			<div className="litobc-item">
 				{!thumbnail && (
-					<figure className="humibbc-figure">
+					<figure className="litobc-figure">
 						{thumbnailUrl ? (
 							<img src={thumbnailUrl} alt="" aria-hidden="true" />
 						) : (
@@ -20,21 +20,21 @@ export default function Result({ attributes }) {
 						)}
 					</figure>
 				)}
-				<div className="humibbc-content">
-					{displayTitle && <div className="humibbc-title">{he.decode(displayTitle)}</div>}
+				<div className="litobc-content">
+					{displayTitle && <div className="litobc-title">{he.decode(displayTitle)}</div>}
 					{displayDescription && (
-						<div className="humibbc-description">{he.decode(displayDescription)}</div>
+						<div className="litobc-description">{he.decode(displayDescription)}</div>
 					)}
-					<div className="humibbc-cite">
+					<div className="litobc-cite">
 						{json.hasFavicon === 200 && (
-							<img className="humibbc-favicon" src={faviconUrl(url)} alt="" aria-hidden="true" />
+							<img className="litobc-favicon" src={faviconUrl(url)} alt="" aria-hidden="true" />
 						)}
-						<div className="humibbc-domain">{domain}</div>
+						<div className="litobc-domain">{domain}</div>
 					</div>
 				</div>
 			</div>
-			<div className="humibbc-footer">
-				<button className="humibbc-link components-button is-secondary">
+			<div className="litobc-footer">
+				<button className="litobc-link components-button is-secondary">
 					<a href={url} target="blank noopener noreferrer">
 						リンク先を表示
 					</a>

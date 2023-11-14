@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Blogcard by Humi Blocks
+Plugin Name: Blogcard by Litography Blocks
 Plugin URI: https://e-joint.jp/works/blogcard-for-wp
 Description: URLを貼るだけで、ブログカード風のリンクが作れるGutenbergブロックです。
 Version:     1.0.7
@@ -27,10 +27,10 @@ along with WP Blogcard. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 
 include_once plugin_dir_path(__FILE__) . 'inc/return_json.php';
 
-function humibbc_init() {
+function litobc_init() {
 	register_block_type(__DIR__ . '/build');
 }
-add_action('init', 'humibbc_init');
+add_action('init', 'litobc_init');
 
 /**
  * Categories
@@ -38,20 +38,20 @@ add_action('init', 'humibbc_init');
  * @param array $categories Categories.
  * @param array $post Post.
  */
-if (!function_exists('humib_categories')) {
-	function humib_categories($categories, $post) {
+if (!function_exists('litob_categories')) {
+	function litob_categories($categories, $post) {
 		return array_merge($categories, [
 			[
-				'slug' => 'humi-blocks', // ブロックカテゴリーのスラッグ.
-				'title' => 'Humi Blocks', // ブロックカテゴリーの表示名.
+				'slug' => 'litography-blocks', // ブロックカテゴリーのスラッグ.
+				'title' => 'Litography Blocks', // ブロックカテゴリーの表示名.
 				// 'icon'  => 'wordpress',    //アイコンの指定（Dashicons名）.
 			],
 		]);
 	}
-	add_filter('block_categories_all', 'humib_categories', 10, 2);
+	add_filter('block_categories_all', 'litob_categories', 10, 2);
 }
 
-function humibbc_block_enqueue() {
+function litobc_block_enqueue() {
 	/**
 	 * PHPで生成した値をJavaScriptに渡す
 	 *
@@ -59,44 +59,44 @@ function humibbc_block_enqueue() {
 	 * 第2引数: JavaScript内でのオブジェクト名
 	 * 第3引数: 渡したい値の配列
 	 */
-	wp_localize_script('humi-blogcard-editor-script', 'HUMIBLOGCARD', [
+	wp_localize_script('lito-blogcard-editor-script', 'LITOBC', [
 		'api' => admin_url('admin-ajax.php'),
-		'action' => 'humibbc-action',
-		'nonce' => wp_create_nonce('humibbc-ajax'),
-		'actionRemoveCache' => 'humibbc-action-remove-cache', // cache削除用
-		'nonceRemoveCache' => wp_create_nonce('humibbc-ajax-remove-cache'), // cache削除用
+		'action' => 'litobc-action',
+		'nonce' => wp_create_nonce('litobc-ajax'),
+		'actionRemoveCache' => 'litobc-action-remove-cache', // cache削除用
+		'nonceRemoveCache' => wp_create_nonce('litobc-ajax-remove-cache'), // cache削除用
 	]);
 }
-add_action('enqueue_block_editor_assets', 'humibbc_block_enqueue');
+add_action('enqueue_block_editor_assets', 'litobc_block_enqueue');
 
 /**
  * Ajaxで返すもの
  */
-function humibbc_ajax() {
-	if (wp_verify_nonce($_POST['nonce'], 'humibbc-ajax')) {
+function litobc_ajax() {
+	if (wp_verify_nonce($_POST['nonce'], 'litobc-ajax')) {
 		// キャッシュ機能を有効にするには第2引数をtrue
-		$json = humibbc_json($_POST, true);
+		$json = litobc_json($_POST, true);
 		echo $json;
 
 		die();
 	}
 }
-add_action('wp_ajax_humibbc-action', 'humibbc_ajax');
+add_action('wp_ajax_litobc-action', 'litobc_ajax');
 
-function humibbc_ajax_remove_cache() {
-	if (wp_verify_nonce($_POST['nonce'], 'humibbc-ajax-remove-cache')) {
-		$transient_name = humibbc_transient_name($_POST['url']);
+function litobc_ajax_remove_cache() {
+	if (wp_verify_nonce($_POST['nonce'], 'litobc-ajax-remove-cache')) {
+		$transient_name = litobc_transient_name($_POST['url']);
 		echo delete_transient($transient_name);
 
 		die();
 	}
 }
-add_action('wp_ajax_humibbc-action-remove-cache', 'humibbc_ajax_remove_cache');
+add_action('wp_ajax_litobc-action-remove-cache', 'litobc_ajax_remove_cache');
 
 /**
  * wp-optionsに保存するcacheにつけるoption_name
  * @param string $url
  */
-function humibbc_transient_name($url) {
+function litobc_transient_name($url) {
 	return 'wpbc--' . rawurlencode($url);
 }
